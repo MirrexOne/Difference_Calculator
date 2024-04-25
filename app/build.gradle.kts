@@ -14,6 +14,9 @@ repositories {
 dependencies {
     testImplementation(platform("org.junit:junit-bom:5.10.0"))
     testImplementation("org.junit.jupiter:junit-jupiter")
+
+    implementation("info.picocli:picocli:4.7.5")
+    implementation("info.picocli:picocli-codegen:4.7.5")
 }
 
 tasks.test {
@@ -32,3 +35,4 @@ tasks.getByName("run", JavaExec::class) {
 application {
     mainClass = "hexlet.code.App"
 }
+
