@@ -21,10 +21,12 @@ public class App implements Callable {
     @Parameters(index = "1", paramLabel = "filepath2", description = "Path to second file")
     private String filepath2;
     @Override
-    public Object call() throws IOException {
-        Differ.generate(filepath1, filepath2);
-        return null;
+    public String call() throws IOException {
+        String difference = Differ.generate(filepath1, filepath2);
+        System.out.println(difference);
+        return difference;
     }
+
     public static void main(String[] args) {
         try {
             System.exit(new CommandLine(new App()).execute(args));
