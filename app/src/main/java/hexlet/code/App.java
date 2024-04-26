@@ -5,7 +5,7 @@ import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 import picocli.CommandLine.Parameters;
 
-import java.io.File;
+import java.io.IOException;
 import java.util.concurrent.Callable;
 
 @Command(name = "gendiff", mixinStandardHelpOptions = true,
@@ -16,19 +16,22 @@ public class App implements Callable {
     private String format = "stylish";
 
     @Parameters(index = "0", paramLabel = "filepath1", description = "Path to first file")
-    private File file1;
+    private String filepath1;
 
     @Parameters(index = "1", paramLabel = "filepath2", description = "Path to second file")
-    private File file2;
-
+    private String filepath2;
     @Override
-    public Object call() throws Exception {
+    public Object call() throws IOException {
+        Differ.generate(filepath1, filepath2);
         return null;
     }
-
     public static void main(String[] args) {
-        System.exit(new CommandLine(new App()).execute(args));
-
+        try {
+            System.exit(new CommandLine(new App()).execute(args));
+            throw new IOException("File does not found");
+        } catch (IOException exception) {
+            exception.getMessage();
+        }
     }
-}
 
+}
