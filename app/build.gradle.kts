@@ -17,6 +17,8 @@ dependencies {
 
     implementation("info.picocli:picocli:4.7.5")
     implementation("info.picocli:picocli-codegen:4.7.5")
+
+    implementation("com.fasterxml.jackson.core:jackson-databind:2.17.0")
 }
 
 tasks.test {
@@ -26,6 +28,7 @@ tasks.test {
 
 tasks.jacocoTestReport {
     dependsOn(tasks.test)
+    reports { xml.required.set(true) }
 }
 
 tasks.getByName("run", JavaExec::class) {
