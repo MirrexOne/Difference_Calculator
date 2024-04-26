@@ -22,27 +22,12 @@ public class Differ {
         Map<String, String> parsedJson2 = parse(normalizePath2);
 
 //        System.out.println("Unsorted map 1: " + parsedJson1);
-        Map<String, String> sortedMap1 = parsedJson1.entrySet()
-                .stream()
-                .sorted(Map.Entry.comparingByKey())
-                .collect(Collectors.toMap(
-                        Map.Entry::getKey,
-                        Map.Entry::getValue,
-                        (e1, e2) -> e1, LinkedHashMap::new));
-
-
+        Map<String, String> sortedMap1 = sortMap(parsedJson1);
 //        System.out.println("Unsorted map 2: " + parsedJson2);
-        Map<String, String> sortedMap2 = parsedJson2.entrySet()
-                .stream()
-                .sorted(Map.Entry.comparingByKey())
-                .collect(Collectors.toMap(
-                        Map.Entry::getKey,
-                        Map.Entry::getValue,
-                        (e1, e2) -> e1, LinkedHashMap::new));
+        Map<String, String> sortedMap2 = sortMap(parsedJson2);
 
 //        System.out.println("Sorted map 1: " +  sortedMap1);
 //        System.out.println("Sorted map 2: " +  sortedMap2);
-
 
         StringBuilder difference = new StringBuilder();
         difference.append("{").append("\n");
@@ -81,7 +66,17 @@ public class Differ {
 
     }
 
-    public static Map<String, String> parse(Path pathToFile) throws IOException {
+    private static Map<String, String> sortMap(Map<String, String> unsortedMap) {
+        return unsortedMap.entrySet()
+                .stream()
+                .sorted(Map.Entry.comparingByKey())
+                .collect(Collectors.toMap(
+                        Map.Entry::getKey,
+                        Map.Entry::getValue,
+                        (e1, e2) -> e1, LinkedHashMap::new));
+    }
+
+    private static Map<String, String> parse(Path pathToFile) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         TypeReference<HashMap<String, String>> specifiedType = new TypeReference<>() {
         };
@@ -91,7 +86,7 @@ public class Differ {
         return mapper.readValue(createdFile, specifiedType);
     }
 
-    public static Path normalizePath(String path) throws IOException {
+    private static Path normalizePath(String path) throws IOException {
         Path normalizeAbsolutePath = Paths.get(path).toAbsolutePath().normalize();
 
         if (!Files.exists(normalizeAbsolutePath)) {
