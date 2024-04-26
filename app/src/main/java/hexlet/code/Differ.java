@@ -9,9 +9,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Differ {
-
 
     public static String generate(String pathToFile1, String pathToFile2) throws IOException {
         Path normalizePath1 = normalizePath(pathToFile1);
@@ -19,15 +19,68 @@ public class Differ {
         Map<String, String> parsedJson1 = parse(normalizePath1);
         Map<String, String> parsedJson2 = parse(normalizePath2);
 
-        System.out.println(parsedJson1);
-        System.out.println(parsedJson2);
-        return "";
+        System.out.println("Unsorted map 1: " + parsedJson1);
+        Map<String, String> sortedMap1 = parsedJson1.entrySet()
+                .stream()
+                .sorted(Map.Entry.comparingByKey())
+                .collect(Collectors.toMap(
+                        Map.Entry::getKey,
+                        Map.Entry::getValue,
+                        (e1, e2) -> e1, LinkedHashMap::new));
+
+
+        System.out.println("Unsorted map 2: " + parsedJson2);
+        Map<String, String> sortedMap2 = parsedJson2.entrySet()
+                .stream()
+                .sorted(Map.Entry.comparingByKey())
+                .collect(Collectors.toMap(
+                        Map.Entry::getKey,
+                        Map.Entry::getValue,
+                        (e1, e2) -> e1, LinkedHashMap::new));
+
+        System.out.println("Sorted map 1: " +  sortedMap1);
+        System.out.println("Sorted map 2: " +  sortedMap2);
+
+
+        StringBuilder difference = new StringBuilder();
+        difference.append("{").append("\n");
+        for (Map.Entry<String, String> entry : parsedJson1.entrySet()) {
+            String key1 = entry.getKey();
+            String value1 = entry.getValue();
+
+            if ((parsedJson1.containsKey(key1) && parsedJson2.containsKey(key1))
+                    && (parsedJson1.containsValue(value1) && parsedJson2.containsValue(value1))) {
+                difference.append("    ").append(key1).append(": ").append(value1).append("\n");
+            } else if ((parsedJson1.containsKey(key1) && parsedJson2.containsKey(key1))
+                    && !(parsedJson1.get(key1).equals(parsedJson2.get(key1)))) {
+                difference.append("  - ").append(key1).append(": ").append(value1).append("\n");
+                difference.append("  + ").append(key1).append(": ").append(parsedJson2.get(key1)).append("\n");
+            } else if (!(parsedJson1.containsKey(key1) && parsedJson2.containsKey(key1))) {
+                difference.append("  - ").append(key1).append(": ").append(value1).append("\n");
+            }
+
+        }
+
+        for (Map.Entry<String, String> entry1 : parsedJson2.entrySet()) {
+            String key2 = entry1.getKey();
+            String value2 = entry1.getKey();
+
+            if (!parsedJson1.containsKey(key2)) {
+                difference.append("  + ").append(key2).append(": ").append(value2).append("\n");
+            }
+
+        }
+        difference.append("}");
+
+        System.out.println(difference);
+        return difference.toString();
 
     }
 
     public static Map<String, String> parse(Path pathToFile) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
-        TypeReference<HashMap<String, String>> specifiedType = new TypeReference<>() {};
+        TypeReference<HashMap<String, String>> specifiedType = new TypeReference<>() {
+        };
 
         File createdFile = pathToFile.toFile();
 
