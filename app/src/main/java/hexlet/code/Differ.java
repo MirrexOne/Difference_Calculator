@@ -19,7 +19,7 @@ public class Differ {
         Map<String, String> parsedJson1 = parse(normalizePath1);
         Map<String, String> parsedJson2 = parse(normalizePath2);
 
-        System.out.println("Unsorted map 1: " + parsedJson1);
+//        System.out.println("Unsorted map 1: " + parsedJson1);
         Map<String, String> sortedMap1 = parsedJson1.entrySet()
                 .stream()
                 .sorted(Map.Entry.comparingByKey())
@@ -29,7 +29,7 @@ public class Differ {
                         (e1, e2) -> e1, LinkedHashMap::new));
 
 
-        System.out.println("Unsorted map 2: " + parsedJson2);
+//        System.out.println("Unsorted map 2: " + parsedJson2);
         Map<String, String> sortedMap2 = parsedJson2.entrySet()
                 .stream()
                 .sorted(Map.Entry.comparingByKey())
@@ -38,8 +38,8 @@ public class Differ {
                         Map.Entry::getValue,
                         (e1, e2) -> e1, LinkedHashMap::new));
 
-        System.out.println("Sorted map 1: " +  sortedMap1);
-        System.out.println("Sorted map 2: " +  sortedMap2);
+//        System.out.println("Sorted map 1: " +  sortedMap1);
+//        System.out.println("Sorted map 2: " +  sortedMap2);
 
 
         StringBuilder difference = new StringBuilder();
@@ -74,7 +74,7 @@ public class Differ {
 
         difference.append("}");
 
-        System.out.println(difference);
+//        System.out.println(difference);
         return difference.toString();
 
     }
