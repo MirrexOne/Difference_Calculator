@@ -44,32 +44,34 @@ public class Differ {
 
         StringBuilder difference = new StringBuilder();
         difference.append("{").append("\n");
-        for (Map.Entry<String, String> entry : parsedJson1.entrySet()) {
+
+        for (Map.Entry<String, String> entry : sortedMap1.entrySet()) {
             String key1 = entry.getKey();
             String value1 = entry.getValue();
 
-            if ((parsedJson1.containsKey(key1) && parsedJson2.containsKey(key1))
-                    && (parsedJson1.containsValue(value1) && parsedJson2.containsValue(value1))) {
+            if ((sortedMap1.containsKey(key1) && sortedMap2.containsKey(key1))
+                    && (sortedMap1.containsValue(value1) && sortedMap2.containsValue(value1))) {
                 difference.append("    ").append(key1).append(": ").append(value1).append("\n");
-            } else if ((parsedJson1.containsKey(key1) && parsedJson2.containsKey(key1))
-                    && !(parsedJson1.get(key1).equals(parsedJson2.get(key1)))) {
+            } else if ((sortedMap1.containsKey(key1) && sortedMap2.containsKey(key1))
+                    && !(sortedMap1.get(key1).equals(sortedMap2.get(key1)))) {
                 difference.append("  - ").append(key1).append(": ").append(value1).append("\n");
-                difference.append("  + ").append(key1).append(": ").append(parsedJson2.get(key1)).append("\n");
-            } else if (!(parsedJson1.containsKey(key1) && parsedJson2.containsKey(key1))) {
+                difference.append("  + ").append(key1).append(": ").append(sortedMap2.get(key1)).append("\n");
+            } else if (!(sortedMap1.containsKey(key1) && sortedMap2.containsKey(key1))) {
                 difference.append("  - ").append(key1).append(": ").append(value1).append("\n");
             }
 
         }
 
-        for (Map.Entry<String, String> entry1 : parsedJson2.entrySet()) {
+        for (Map.Entry<String, String> entry1 : sortedMap2.entrySet()) {
             String key2 = entry1.getKey();
             String value2 = entry1.getKey();
 
-            if (!parsedJson1.containsKey(key2)) {
+            if (!sortedMap1.containsKey(key2)) {
                 difference.append("  + ").append(key2).append(": ").append(value2).append("\n");
             }
 
         }
+
         difference.append("}");
 
         System.out.println(difference);
