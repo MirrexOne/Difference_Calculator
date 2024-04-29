@@ -57,8 +57,5 @@ class DifferTest {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
     }
-
-
 }
