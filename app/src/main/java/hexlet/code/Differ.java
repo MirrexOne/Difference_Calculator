@@ -66,7 +66,7 @@ public class Differ {
     }
 
 
-    private static Map<String, String> sortMap(Map<String, String> unsortedMap) {
+    protected static Map<String, String> sortMap(Map<String, String> unsortedMap) {
         return unsortedMap.entrySet()
                 .stream()
                 .sorted(Map.Entry.comparingByKey())
@@ -74,7 +74,7 @@ public class Differ {
                         (e1, e2) -> e1, LinkedHashMap::new));
     }
 
-    private static Map<String, String> parse(Path pathToFile) throws IOException {
+    protected static Map<String, String> parse(Path pathToFile) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         TypeReference<HashMap<String, String>> specifiedType = new TypeReference<>() {
         };
@@ -84,7 +84,7 @@ public class Differ {
         return mapper.readValue(createdFile, specifiedType);
     }
 
-    private static Path normalizePath(String path) throws IOException {
+    protected static Path normalizePath(String path) throws IOException {
         Path normalizeAbsolutePath = Paths.get(path).toAbsolutePath().normalize();
 
         if (!Files.exists(normalizeAbsolutePath)) {
