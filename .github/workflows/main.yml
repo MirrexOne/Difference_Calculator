@@ -18,7 +18,8 @@ jobs:
         with:
           gradle-version: 8.7
           with:
-            build-root-directory:app
+            arguments: build
+            build-root-directory: app
       - run: make -C app build
 
       - name: Publish code coverage
