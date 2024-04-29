@@ -18,7 +18,6 @@ jobs:
         with:
           gradle-version: 8.7
           with:
-            arguments: build
             build-root-directory: app
       - run: make -C app build
 
