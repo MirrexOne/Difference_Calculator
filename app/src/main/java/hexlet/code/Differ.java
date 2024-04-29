@@ -70,10 +70,8 @@ public class Differ {
         return unsortedMap.entrySet()
                 .stream()
                 .sorted(Map.Entry.comparingByKey())
-                .collect(Collectors.toMap
-                        (Map.Entry::getKey,
-                                Map.Entry::getValue,
-                                (e1, e2) -> e1, LinkedHashMap::new));
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue,
+                        (e1, e2) -> e1, LinkedHashMap::new));
     }
 
     private static Map<String, String> parse(Path pathToFile) throws IOException {
