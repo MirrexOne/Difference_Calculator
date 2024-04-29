@@ -11,18 +11,22 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class DifferTest {
 
-    private String pathToFile1;
-    private String pathToFile2;
+    private String pathToJsonFile1;
+    private String pathToJsonFile2;
+    private String pathToYamlFile1;
+    private String pathToYamlFile2;
 
     @BeforeEach
     public void beforeEach() {
-        pathToFile1 = "./src/test/resources/file1.json";
-        pathToFile2 = "./src/test/resources/file2.json";
+        pathToJsonFile1 = "./src/test/resources/file1.json";
+        pathToJsonFile2 = "./src/test/resources/file2.json";
+        pathToYamlFile1 = "./src/test/resources/file3.yaml";
+        pathToYamlFile2 = "./src/test/resources/file4.yaml";
 
     }
 
     @Test
-    void testDefaultGenerate() {
+    void testDefaultGenerateJson() {
         String expected = "{\n"
                 +
                 "  - follow: false\n"
@@ -38,14 +42,39 @@ class DifferTest {
                 "  + verbose: verbose\n"
                 +
                 "}";
+
         try {
-            String actual = Differ.generate(pathToFile1, pathToFile2);
+            String actual = Differ.generate(pathToJsonFile1, pathToJsonFile2);
             assertEquals(expected, actual);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
 
+    @Test
+    void testDefaultGenerateYaml() {
+        String expected = "{\n"
+                +
+                "  - follow: false\n"
+                +
+                "    host: hexlet.io\n"
+                +
+                "  - proxy: 123.234.53.22\n"
+                +
+                "  - timeout: 50\n"
+                +
+                "  + timeout: 20\n"
+                +
+                "  + verbose: verbose\n"
+                +
+                "}";
 
+        try {
+            String actual = Differ.generate(pathToYamlFile1, pathToYamlFile2);
+            assertEquals(expected, actual);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Test
