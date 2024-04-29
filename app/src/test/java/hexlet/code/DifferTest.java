@@ -4,8 +4,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class DifferTest {
 
@@ -46,16 +49,17 @@ class DifferTest {
 
     }
 
-//    @Test
-//    void testNormalizePath() {
-//        Path expected = Paths.get("src/test/resources/file1.json");
-//        Path absolutePath = expected.toFile().getAbsolutePath();
-//
-//        try {
-//            Path actual = Differ.normalizePath(pathToFile1);
-//            assertEquals(absolutePath, actual);
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
+    @Test
+    void testNormalizePath() {
+        String expected = "src/test/resources/file1.json";
+        Path actual;
+        try {
+            actual = Differ.normalizePath(expected);
+            assertTrue(actual.endsWith(expected));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
+        assertTrue(actual.endsWith("src/test/resources/file1.json"));
+    }
 }
