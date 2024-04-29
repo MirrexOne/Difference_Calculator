@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class DifferTest {
 
@@ -20,13 +20,20 @@ class DifferTest {
 
     @Test
     void testDefaultGenerate() {
-        String expected = "{\n" +
-                "  - follow: false\n" +
-                "    host: hexlet.io\n" +
-                "  - proxy: 123.234.53.22\n" +
-                "  - timeout: 50\n" +
-                "  + timeout: 20\n" +
-                "  + verbose: verbose\n" +
+        String expected = "{\n"
+                +
+                "  - follow: false\n"
+                +
+                "    host: hexlet.io\n"
+                +
+                "  - proxy: 123.234.53.22\n"
+                +
+                "  - timeout: 50\n"
+                +
+                "  + timeout: 20\n"
+                +
+                "  + verbose: verbose\n"
+                +
                 "}";
         try {
             String actual = Differ.generate(pathToFile1, pathToFile2);
