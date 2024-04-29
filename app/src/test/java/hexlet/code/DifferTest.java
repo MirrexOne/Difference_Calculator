@@ -50,7 +50,8 @@ class DifferTest {
 
     @Test
     void testNormalizePath() {
-        Path expected = Paths.get("/home/crucial/IdeaProjects/java-project-71/app/src/test/resources/file1.json");
+        Path expected = Paths.get("/home/crucial/IdeaProjects/java-project-71/app/src/test/resources/file1.json")
+                .toAbsolutePath();
         try {
             Path actual = Differ.normalizePath(pathToFile1);
             assertEquals(expected, actual);
