@@ -86,7 +86,7 @@ public class Differ {
 
     protected static Path normalizePath(String path) throws IOException {
         Path normalizeAbsolutePath = Paths.get(path).toAbsolutePath().normalize();
-
+        System.out.println(normalizeAbsolutePath);
         if (!Files.exists(normalizeAbsolutePath)) {
             throw new IOException("File '" + normalizeAbsolutePath + "' does not exist");
         }
