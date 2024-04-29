@@ -4,6 +4,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -16,6 +20,7 @@ class DifferTest {
     public void beforeEach() {
         pathToFile1 = "./src/test/resources/file1.json";
         pathToFile2 = "./src/test/resources/file2.json";
+
     }
 
     @Test
@@ -42,6 +47,18 @@ class DifferTest {
             throw new RuntimeException(e);
         }
 
+
+    }
+
+    @Test
+    void testNormalizePath() {
+        Path expected = Paths.get("/home/crucial/IdeaProjects/java-project-71/app/src/test/resources/file1.json");
+        try {
+            Path actual = Differ.normalizePath(pathToFile1);
+            assertEquals(expected, actual);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
     }
 
