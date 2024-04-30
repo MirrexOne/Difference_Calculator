@@ -14,7 +14,7 @@ public class Parser {
 
     static Map<String, String> parseJson(Path pathToFile) throws IOException {
         ObjectMapper mapperJson = new ObjectMapper();
-        TypeReference<HashMap<String, String>> specifiedType = new TypeReference<>() {};
+        TypeReference<HashMap<String, String>> specifiedType = new TypeReference<>() { };
 
         File createdFile = pathToFile.toFile();
 
@@ -23,7 +23,7 @@ public class Parser {
 
     static Map<String, String> parseYaml(Path pathToFile) throws IOException {
         ObjectMapper mapperYaml = new YAMLMapper();
-        TypeReference<HashMap<String, String>> specifiedType = new TypeReference<>() {};
+        TypeReference<HashMap<String, String>> specifiedType = new TypeReference<>() { };
 
         mapperYaml.findAndRegisterModules();
 
