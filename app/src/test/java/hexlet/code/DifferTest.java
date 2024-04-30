@@ -18,8 +18,8 @@ class DifferTest {
 
     @BeforeEach
     public void beforeEach() {
-        pathToJsonFile1 = "./src/test/resources/file1.json";
-        pathToJsonFile2 = "./src/test/resources/file2.json";
+        pathToJsonFile1 = "./src/test/resources/file5JsonNested.json";
+        pathToJsonFile2 = "./src/test/resources/file6JsonNested.json";
         pathToYamlFile1 = "./src/test/resources/file3.yaml";
         pathToYamlFile2 = "./src/test/resources/file4.yaml";
 
@@ -29,17 +29,51 @@ class DifferTest {
     void testDefaultGenerateJson() {
         String expected = "{\n"
                 +
-                "  - follow: false\n"
+                "    chars1: [a, b, c]\n"
                 +
-                "    host: hexlet.io\n"
+                "  - chars2: [d, e, f]\n"
                 +
-                "  - proxy: 123.234.53.22\n"
+                "  + chars2: false\n"
                 +
-                "  - timeout: 50\n"
+                "  - checked: false\n"
                 +
-                "  + timeout: 20\n"
+                "  + checked: true\n"
                 +
-                "  + verbose: true\n"
+                "  - default: null\n"
+                +
+                "  + default: [value1, value2]\n"
+                +
+                "  - id: 45\n"
+                +
+                "  + id: null\n"
+                +
+                "  - key1: value1\n"
+                +
+                "  + key2: value2\n"
+                +
+                "    numbers1: [1, 2, 3, 4]\n"
+                +
+                "  - numbers2: [2, 3, 4, 5]\n"
+                +
+                "  + numbers2: [22, 33, 44, 55]\n"
+                +
+                "  - numbers3: [3, 4, 5]\n"
+                +
+                "  + numbers4: [4, 5, 6]\n"
+                +
+                "  + obj1: {nestedKey=value, isNested=true}\n"
+                +
+                "  - setting1: Some value\n"
+                +
+                "  + setting1: Another value\n"
+                +
+                "  - setting2: 200\n"
+                +
+                "  + setting2: 300\n"
+                +
+                "  - setting3: true\n"
+                +
+                "  + setting3: none\n"
                 +
                 "}";
 
