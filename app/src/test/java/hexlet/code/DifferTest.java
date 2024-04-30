@@ -53,20 +53,34 @@ class DifferTest {
 
     @Test
     void testDefaultGenerateYaml() {
-        String expected = "{\n" +
-                "  - anyway: -1360869290\n" +
-                "  - managed: -763042806.5871592\n" +
-                "  - mighty: send\n" +
-                "    percent: true\n" +
-                "  - railroad: arrow\n" +
-                "  + railroad: crucial\n" +
-                "  - rhythm: discuss\n" +
-                "  + age: account\n" +
-                "  + caught: directly\n" +
-                "  + crowd: -894811462\n" +
-                "  + him: false\n" +
-                "  + jungle: true\n" +
-                "  + keep: thy\n" +
+        String expected = "{\n"
+                +
+                "  - anyway: -1360869290\n"
+                +
+                "  - managed: -763042806.5871592\n"
+                +
+                "  - mighty: send\n"
+                +
+                "    percent: true\n"
+                +
+                "  - railroad: arrow\n"
+                +
+                "  + railroad: crucial\n"
+                +
+                "  - rhythm: discuss\n"
+                +
+                "  + age: account\n"
+                +
+                "  + caught: directly\n"
+                +
+                "  + crowd: -894811462\n"
+                +
+                "  + him: false\n"
+                +
+                "  + jungle: true\n"
+                +
+                "  + keep: thy\n"
+                +
                 "}";
 
         try {
