@@ -27,13 +27,13 @@ public class Differ {
         Map<String, String> typeDataParsed2 = "json".equalsIgnoreCase(fileExtension2.orElseThrow())
                 ? parseJson(normalizePath2) : parseYaml(normalizePath2);
 
-        System.out.println("Parsed yaml 1: " + typeDataParsed1);
-        System.out.println("Parsed yaml 2: " + typeDataParsed2);
+//        System.out.println("Parsed yaml 1: " + typeDataParsed1);
+//        System.out.println("Parsed yaml 2: " + typeDataParsed2);
 
         Map<String, String> sortParsedData1 = sortMap(typeDataParsed1);
         Map<String, String> sortParsedData2 = sortMap(typeDataParsed2);
-        System.out.println("Sorted yaml 1: " + sortParsedData1);
-        System.out.println("Sorted yaml 2: " + sortParsedData2);
+//        System.out.println("Sorted yaml 1: " + sortParsedData1);
+//        System.out.println("Sorted yaml 2: " + sortParsedData2);
 
         return generateDifference(sortParsedData1, sortParsedData2);
 
