@@ -12,9 +12,6 @@ import java.util.Map;
 
 public class Parser {
 
-//    private Parser() {
-//    }
-
     static Map<String, String> parseJson(Path pathToFile) throws IOException {
         ObjectMapper mapperJson = new ObjectMapper();
         TypeReference<HashMap<String, String>> specifiedType = new TypeReference<>() {};
@@ -34,8 +31,4 @@ public class Parser {
 
         return mapperYaml.readValue(createdFile, specifiedType);
     }
-
-//    public static Parser createParser() {
-//        return new Parser();
-//    }
 }
