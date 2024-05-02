@@ -51,45 +51,44 @@ public class Differ {
             System.out.println(" Value: "+ el2);
         });
 
-        Map<String, List<Map<String, String>>> differenceStore = new LinkedHashMap<>();
-//
-//        fileData1.entrySet()
-//                .forEach((el) -> {
-//                    String key = el.getKey();
-//                    String value = el.getValue();
-//                    if ((fileData1.containsKey(key) && fileData2.containsKey(key))
-//                    && (value.equals(fileData2.get(key)))) {
-//
-//                        List<Map<String, String>> unchangedKey = List.of(new HashMap<>(Map.of(key, value)));
-//                        differenceStore.put("UnchangedKey", unchangedKey);
-//                    } else if ((fileData1.containsKey(key) && fileData2.containsKey(key))
-//                    && (!value.equals(fileData2.get(key)))) {
-//
-//                        List<Map<String, String>> oldValueByExistentKey = List.of(new HashMap<>(Map.of(key, value)));
-//                        List<Map<String, String>> newValueByExistentKey = List.of(new HashMap<>(Map.of(key, fileData2.get(key))));
-//                        differenceStore.put("oldValueByKey", oldValueByExistentKey);
-//                        differenceStore.put("NewValueByKey", newValueByExistentKey);
-//
-//                    } else if (!(fileData1.containsKey(key) && fileData2.containsKey(key))) {
-//
-//                        List<Map<String, String>> nonExistentValue = List.of(new HashMap<>(Map.of(key, value)));
-//                        differenceStore.put("DeletedKey", nonExistentValue);
-//                    }
-//                });
-//
-//        fileData2.entrySet()
-//                .forEach(el -> {
-//                    String key = el.getKey();
-//                    String value = el.getValue();
-//                    if (!fileData1.containsKey(key)) {
-//                        List<Map<String, String>> newKey = List.of(new HashMap<>(Map.of(key, value)));
-//                        differenceStore.put("NewKey", newKey);
-//                    }
-//                });
-//    differenceStore.forEach((key, value) -> {
-//        System.out.print(key);
-//        System.out.println(value);
-//    });
+        Map<String, Map<String, Object>> differenceStore = new LinkedHashMap<>();
+
+        fileData1.forEach((key, value1) -> {
+            if ((fileData1.containsKey(key) && fileData2.containsKey(key))
+                    && (Objects.deepEquals(value1, fileData2.get(key)))) {
+
+                Map<String, Object> unchangedKey = new LinkedHashMap<>();
+                unchangedKey.put(key, value1);
+                differenceStore.put("UnchangedKey", unchangedKey);
+            } else if ((fileData1.containsKey(key) && fileData2.containsKey(key))
+                    && (!Objects.deepEquals(value1, fileData2.get(key)))) {
+
+                Map<String, Object> oldValueByExistentKey = new LinkedHashMap<>();
+                oldValueByExistentKey.put(key, value1);
+                Map<String, Object> newValueByExistentKey = new LinkedHashMap<>();
+                newValueByExistentKey.put(key, fileData2.get(key));
+                differenceStore.put("oldValueByKey", oldValueByExistentKey);
+                differenceStore.put("NewValueByKey", newValueByExistentKey);
+
+            } else if (!(fileData1.containsKey(key) && fileData2.containsKey(key))) {
+
+                Map<String, Object> nonExistentValue = new LinkedHashMap<>();
+                nonExistentValue.put(key, value1);
+                differenceStore.put("DeletedKey", nonExistentValue);
+            }
+        });
+
+        fileData2.forEach((key, value) -> {
+            if (!fileData1.containsKey(key)) {
+                Map<String, Object> newKey = new LinkedHashMap<>();
+                newKey.put(key, value);
+                differenceStore.put("NewKey", newKey);
+            }
+        });
+    differenceStore.forEach((key, value) -> {
+        System.out.print(key);
+        System.out.println(value);
+    });
     }
 
 
