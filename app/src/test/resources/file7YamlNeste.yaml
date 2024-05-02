@@ -12,7 +12,7 @@ xmas-fifth-day:
     calling-birds: four
     french-hens: 3
     golden-rings: 5
-    partridges:
+partridges:
       count: 1
       location: "a pear tree"
-    turtle-doves: two
+      turtle-doves: two
