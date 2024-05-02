@@ -9,12 +9,11 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
-import java.util.HashMap;
 import java.util.Map;
 
 public class Parser {
 
-    static Map<String, Object> parseJson(Path pathToFile) throws IOException {
+     static Map<String, Object> parseJson(Path pathToFile) throws IOException {
 //        ObjectMapper mapperJson = new ObjectMapper();
 //        TypeReference<HashMap<String, String>> specifiedType = new TypeReference<>() { };
 
@@ -29,7 +28,7 @@ public class Parser {
 
     static Map<String, Object> parseYaml(Path pathToFile) throws IOException {
         ObjectMapper mapperYaml = new YAMLMapper();
-        TypeReference<HashMap<String, Object>> specifiedType = new TypeReference<>() { };
+        TypeReference<Map<String, Object>> specifiedType = new TypeReference<>() { };
 
         mapperYaml.findAndRegisterModules();
 

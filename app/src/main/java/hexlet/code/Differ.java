@@ -6,7 +6,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
-import java.util.stream.Collectors;
 
 import static hexlet.code.Parser.parseJson;
 import static hexlet.code.Parser.parseYaml;
@@ -35,21 +34,70 @@ public class Differ {
         System.out.println("Sorted yaml 1: " + sortParsedData1);
         System.out.println("Sorted yaml 2: " + sortParsedData2);
 
-
+        generateDifference(sortParsedData1, sortParsedData2);
         return "";
 
     }
 
-//    private static String generateDifference(Map<String, Object> fileData1, Map<String, Object> fileData2) {
+    private static void generateDifference(Map<String, Object> fileData1, Map<String, Object> fileData2) {
+        System.out.println();
+        fileData1.forEach((el1, el2) -> {
+            System.out.print("Key: " + el1);
+            System.out.println(" Value: " + el2);
+        });
+        System.out.println();
+        fileData2.forEach((el1, el2) -> {
+            System.out.print("Key: " + el1);
+            System.out.println(" Value: "+ el2);
+        });
+
+        Map<String, List<Map<String, String>>> differenceStore = new LinkedHashMap<>();
 //
-//    }
+//        fileData1.entrySet()
+//                .forEach((el) -> {
+//                    String key = el.getKey();
+//                    String value = el.getValue();
+//                    if ((fileData1.containsKey(key) && fileData2.containsKey(key))
+//                    && (value.equals(fileData2.get(key)))) {
+//
+//                        List<Map<String, String>> unchangedKey = List.of(new HashMap<>(Map.of(key, value)));
+//                        differenceStore.put("UnchangedKey", unchangedKey);
+//                    } else if ((fileData1.containsKey(key) && fileData2.containsKey(key))
+//                    && (!value.equals(fileData2.get(key)))) {
+//
+//                        List<Map<String, String>> oldValueByExistentKey = List.of(new HashMap<>(Map.of(key, value)));
+//                        List<Map<String, String>> newValueByExistentKey = List.of(new HashMap<>(Map.of(key, fileData2.get(key))));
+//                        differenceStore.put("oldValueByKey", oldValueByExistentKey);
+//                        differenceStore.put("NewValueByKey", newValueByExistentKey);
+//
+//                    } else if (!(fileData1.containsKey(key) && fileData2.containsKey(key))) {
+//
+//                        List<Map<String, String>> nonExistentValue = List.of(new HashMap<>(Map.of(key, value)));
+//                        differenceStore.put("DeletedKey", nonExistentValue);
+//                    }
+//                });
+//
+//        fileData2.entrySet()
+//                .forEach(el -> {
+//                    String key = el.getKey();
+//                    String value = el.getValue();
+//                    if (!fileData1.containsKey(key)) {
+//                        List<Map<String, String>> newKey = List.of(new HashMap<>(Map.of(key, value)));
+//                        differenceStore.put("NewKey", newKey);
+//                    }
+//                });
+//    differenceStore.forEach((key, value) -> {
+//        System.out.print(key);
+//        System.out.println(value);
+//    });
+    }
 
 
     protected static Map<String, Object> sortMap(Map<String, Object> unsortedMap) {
         Map<String, Object> sortedParsedMap = new LinkedHashMap<>();
         unsortedMap.entrySet().stream()
                 .sorted(Map.Entry.comparingByKey())
-                .forEachOrdered(el -> sortedParsedMap.put(el.getKey(), el.getValue()));
+                .forEachOrdered(el -> sortedParsedMap.put(el.getKey(), el.getValue() ));
         return sortedParsedMap;
 
     }
