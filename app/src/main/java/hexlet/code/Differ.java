@@ -30,21 +30,20 @@ public class Differ {
         Map<String, Object> sortParsedData2 = sortMap(typeDataParsed2);
 
 
-        generateDifference(sortParsedData1, sortParsedData2);
+        List<Map<String, Object>> treeOfDifference = generateDifference(sortParsedData1, sortParsedData2);
         return "";
     }
 
-    private static void generateDifference(Map<String, Object> fileData1, Map<String, Object> fileData2) {
-
+    private static List<Map<String, Object>> generateDifference(Map<String, Object> fileData1, Map<String, Object> fileData2) {
         List<Map<String, Object>> differenceStore = new ArrayList<>();
 
         fileData1.forEach((key, value1) -> {
             if ((fileData1.containsKey(key) && fileData2.containsKey(key))
                     && (Objects.deepEquals(value1, fileData2.get(key)))) {
 
-            Map<String, Object> unchangedKey = new LinkedHashMap<>();
-            unchangedKey.put("Unchanged key", key);
-            differenceStore.add(unchangedKey);
+                Map<String, Object> unchangedKey = new LinkedHashMap<>();
+                unchangedKey.put("Unchanged key", key);
+                differenceStore.add(unchangedKey);
 
 
             } else if ((fileData1.containsKey(key) && fileData2.containsKey(key))
@@ -71,17 +70,7 @@ public class Differ {
             }
         });
 
-        differenceStore.forEach(el ->
-                el.forEach((key, nestedKey) -> {
-                    System.out.println("\n" + "Key state: " + el);
-                    if (!Objects.equals("Added key", key)) {
-                        System.out.println("File 1 key/value: " + nestedKey + ": "  + fileData1.get(nestedKey));
-                    }
-
-                    if (!Objects.equals("Deleted key", key)) {
-                        System.out.print("File 2 key/value: " + nestedKey + ": " + fileData2.get(nestedKey) + "\n");
-                    }
-                }));
+        return differenceStore;
     }
 
 
