@@ -26,14 +26,8 @@ public class Differ {
         Map<String, Object> typeDataParsed2 = "json".equalsIgnoreCase(fileExtension2.orElseThrow())
                 ? parseJson(normalizePath2) : parseYaml(normalizePath2);
 
-        System.out.println("Parsed file 1: " + typeDataParsed1);
-        System.out.println("Parsed file 2: " + typeDataParsed2);
-        System.out.println();
-
         Map<String, Object> sortParsedData1 = sortMap(typeDataParsed1);
         Map<String, Object> sortParsedData2 = sortMap(typeDataParsed2);
-        System.out.println("Sorted file 1: " + sortParsedData1);
-        System.out.println("Sorted file 2: " + sortParsedData2);
 
 
         generateDifference(sortParsedData1, sortParsedData2);
@@ -41,24 +35,8 @@ public class Differ {
     }
 
     private static void generateDifference(Map<String, Object> fileData1, Map<String, Object> fileData2) {
-        System.out.println();
-        fileData1.forEach((el1, el2) -> {
-            System.out.print("Key: " + el1);
-            System.out.println(" Value: " + el2);
-        });
-        System.out.println();
-        fileData2.forEach((el1, el2) -> {
-            System.out.print("Key: " + el1);
-            System.out.println(" Value: " + el2);
-        });
 
         List<Map<String, Object>> differenceStore = new ArrayList<>();
-        int  keysCollection1 = fileData1.keySet().size();
-        int  keysCollection2 = fileData2.keySet().size();
-        Set<String> keysFile1 = fileData1.keySet();
-        Set<String> keysFile2 = fileData2.keySet();
-
-
 
         fileData1.forEach((key, value1) -> {
             if ((fileData1.containsKey(key) && fileData2.containsKey(key))
@@ -93,10 +71,17 @@ public class Differ {
             }
         });
 
-        differenceStore.forEach((el) -> {
-            System.out.println(el);
-            System.out.println(el.get(el));
-        });
+        differenceStore.forEach(el ->
+                el.forEach((key, nestedKey) -> {
+                    System.out.println("\n" + "Key state: " + el);
+                    if (!Objects.equals("Added key", key)) {
+                        System.out.println("File 1 key/value: " + nestedKey + ": "  + fileData1.get(nestedKey));
+                    }
+
+                    if (!Objects.equals("Deleted key", key)) {
+                        System.out.print("File 2 key/value: " + nestedKey + ": " + fileData2.get(nestedKey) + "\n");
+                    }
+                }));
     }
 
 
