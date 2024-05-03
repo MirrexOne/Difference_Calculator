@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.List;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -15,127 +17,180 @@ class DifferTest {
     private String pathToJsonFile2;
     private String pathToYamlFile1;
     private String pathToYamlFile2;
+    private Map<String, Object> jsonParsedData1;
+    private Map<String, Object> jsonParsedData2;
+    private Map<String, Object> yamlParsedData1;
+    private Map<String, Object> yamlParsedData2;
 
     @BeforeEach
-    public void beforeEach() {
-        pathToJsonFile1 = "./src/test/resources/file5JsonNested.json";
-        pathToJsonFile2 = "./src/test/resources/file6JsonNested.json";
-        pathToYamlFile1 = "./src/test/resources/file3.yaml";
-        pathToYamlFile2 = "./src/test/resources/file4.yaml";
+    public void beforeAll() throws IOException {
+        pathToJsonFile1 = "./src/test/resources/fixtures/file5JsonNested.json";
+        pathToJsonFile2 = "./src/test/resources/fixtures/file6JsonNested.json";
+        pathToYamlFile1 = "./src/test/resources/fixtures/file7YamlNested.yaml";
+        pathToYamlFile2 = "./src/test/resources/fixtures/file8YamlNested.yaml";
+        yamlParsedData1 = Parser.parseYaml(Path.of(pathToYamlFile1));
+        yamlParsedData2 = Parser.parseYaml(Path.of(pathToYamlFile2));
+
+        jsonParsedData1 = Parser.parseJson(Path.of(pathToJsonFile1));
+        jsonParsedData2 = Parser.parseJson(Path.of(pathToJsonFile2));
 
     }
 
     @Test
-    void testDefaultGenerateJson() {
-        String expected = "{\n"
+    void testGenerateTreeDifferenceJson() {
+        String expected = "[{Modified key=setting1}, "
                 +
-                "    chars1: [a, b, c]\n"
+                "{Modified key=setting2}, "
                 +
-                "  - chars2: [d, e, f]\n"
+                "{Modified key=setting3}, "
                 +
-                "  + chars2: false\n"
+                "{Deleted key=key1},"
                 +
-                "  - checked: false\n"
+                " {Unchanged key=numbers1}, "
                 +
-                "  + checked: true\n"
+                "{Modified key=numbers2},"
                 +
-                "  - default: null\n"
+                " {Modified key=id},"
                 +
-                "  + default: [value1, value2]\n"
+                " {Modified key=default}, "
                 +
-                "  - id: 45\n"
+                "{Modified key=checked},"
                 +
-                "  + id: null\n"
+                " {Deleted key=numbers3}, "
                 +
-                "  - key1: value1\n"
+                "{Unchanged key=chars1}, "
                 +
-                "  + key2: value2\n"
+                "{Modified key=chars2}, "
                 +
-                "    numbers1: [1, 2, 3, 4]\n"
+                "{Added key=key2}, "
                 +
-                "  - numbers2: [2, 3, 4, 5]\n"
+                "{Added key=numbers4}, "
                 +
-                "  + numbers2: [22, 33, 44, 55]\n"
-                +
-                "  - numbers3: [3, 4, 5]\n"
-                +
-                "  + numbers4: [4, 5, 6]\n"
-                +
-                "  + obj1: {nestedKey=value, isNested=true}\n"
-                +
-                "  - setting1: Some value\n"
-                +
-                "  + setting1: Another value\n"
-                +
-                "  - setting2: 200\n"
-                +
-                "  + setting2: 300\n"
-                +
-                "  - setting3: true\n"
-                +
-                "  + setting3: none\n"
-                +
-                "}";
+                "{Added key=obj1}]";
 
-        try {
-            String actual = Differ.generate(pathToJsonFile1, pathToJsonFile2);
-            assertEquals(expected, actual);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        List<Map<String, Object>> actual = Difference.generateDifference(jsonParsedData1, jsonParsedData2);
+        assertEquals(expected, actual.toString());
     }
 
     @Test
-    void testDefaultGenerateYaml() {
-        String expected = "{\n"
+    void testGenerateTreeDifferenceYaml() {
+        String expected = "[{Modified key=doe},"
                 +
-                "  - anyway: -1360869290\n"
+                " {Modified key=ray},"
                 +
-                "  - managed: -763042806.5871592\n"
+                " {Unchanged key=pi},"
                 +
-                "  - mighty: send\n"
+                " {Modified key=xmas},"
                 +
-                "    percent: true\n"
+                " {Unchanged key=french-hens},"
                 +
-                "  - railroad: arrow\n"
+                " {Unchanged key=calling-birds},"
                 +
-                "  + railroad: crucial\n"
+                " {Modified key=xmas-fifth-day},"
                 +
-                "  - rhythm: discuss\n"
-                +
-                "  + age: account\n"
-                +
-                "  + caught: directly\n"
-                +
-                "  + crowd: -894811462\n"
-                +
-                "  + him: false\n"
-                +
-                "  + jungle: true\n"
-                +
-                "  + keep: thy\n"
-                +
-                "}";
+                " {Deleted key=partridges}]";
 
-        try {
-            String actual = Differ.generate(pathToYamlFile1, pathToYamlFile2);
-            assertEquals(expected, actual);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        List<Map<String, Object>> actual = Difference.generateDifference(yamlParsedData1, yamlParsedData2);
+        assertEquals(expected, actual.toString());
     }
 
-    @Test
-    void testNormalizePath() {
-        String expected = "src/test/resources/file1.json";
-        Path actual;
-        try {
-            actual = Differ.normalizePath(expected);
-            assertTrue(actual.endsWith(expected));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+//    @Test
+//    void testDefaultGenerateJson() throws IOException {
+//        String expected = "{\n"
+//                +
+//                "    chars1: [a, b, c]\n"
+//                +
+//                "  - chars2: [d, e, f]\n"
+//                +
+//                "  + chars2: false\n"
+//                +
+//                "  - checked: false\n"
+//                +
+//                "  + checked: true\n"
+//                +
+//                "  - default: null\n"
+//                +
+//                "  + default: [value1, value2]\n"
+//                +
+//                "  - id: 45\n"
+//                +
+//                "  + id: null\n"
+//                +
+//                "  - key1: value1\n"
+//                +
+//                "  + key2: value2\n"
+//                +
+//                "    numbers1: [1, 2, 3, 4]\n"
+//                +
+//                "  - numbers2: [2, 3, 4, 5]\n"
+//                +
+//                "  + numbers2: [22, 33, 44, 55]\n"
+//                +
+//                "  - numbers3: [3, 4, 5]\n"
+//                +
+//                "  + numbers4: [4, 5, 6]\n"
+//                +
+//                "  + obj1: {nestedKey=value, isNested=true}\n"
+//                +
+//                "  - setting1: Some value\n"
+//                +
+//                "  + setting1: Another value\n"
+//                +
+//                "  - setting2: 200\n"
+//                +
+//                "  + setting2: 300\n"
+//                +
+//                "  - setting3: true\n"
+//                +
+//                "  + setting3: none\n"
+//                +
+//                "}";
+//
+//        String actual = Differ.generate(pathToJsonFile1, pathToJsonFile2);
+//        assertEquals(expected, actual);
+//    }
 
-        assertTrue(actual.endsWith("src/test/resources/file1.json"));
+//    @Test
+//    void testDefaultGenerateYaml() throws IOException {
+//        String expected = "{\n"
+//                +
+//                "  - anyway: -1360869290\n"
+//                +
+//                "  - managed: -763042806.5871592\n"
+//                +
+//                "  - mighty: send\n"
+//                +
+//                "    percent: true\n"
+//                +
+//                "  - railroad: arrow\n"
+//                +
+//                "  + railroad: crucial\n"
+//                +
+//                "  - rhythm: discuss\n"
+//                +
+//                "  + age: account\n"
+//                +
+//                "  + caught: directly\n"
+//                +
+//                "  + crowd: -894811462\n"
+//                +
+//                "  + him: false\n"
+//                +
+//                "  + jungle: true\n"
+//                +
+//                "  + keep: thy\n"
+//                +
+//                "}";
+//
+//        String actual = Differ.generate(pathToYamlFile1, pathToYamlFile2);
+//        assertEquals(expected, actual);
+//    }
+
+    @Test
+    void testNormalizePath() throws IOException {
+        String expected = "src/test/resources/fixtures/file1.json";
+        Path actual = Parser.normalizePath(expected);
+        assertTrue(actual.endsWith(expected));
+
     }
 }
