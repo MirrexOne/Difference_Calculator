@@ -13,17 +13,14 @@ import java.util.Map;
 
 public class Parser {
 
-     static Map<String, Object> parseJson(Path pathToFile) throws IOException {
-//        ObjectMapper mapperJson = new ObjectMapper();
-//        TypeReference<HashMap<String, String>> specifiedType = new TypeReference<>() { };
-
+    static Map<String, Object> parseJson(Path pathToFile) throws IOException {
         File createdFile = pathToFile.toFile();
+
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.registerModules(new JavaTimeModule());
         ObjectReader objectReader = objectMapper.reader();
-        Map<String, Object> parsedJson = objectReader.forType(Map.class).readValue(createdFile);
-        return parsedJson;
-//        return mapperJson.readValue(createdFile, specifiedType);
+
+        return objectReader.forType(Map.class).readValue(createdFile);
     }
 
     static Map<String, Object> parseYaml(Path pathToFile) throws IOException {
@@ -36,4 +33,5 @@ public class Parser {
 
         return mapperYaml.readValue(createdFile, specifiedType);
     }
+
 }
