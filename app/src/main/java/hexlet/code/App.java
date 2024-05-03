@@ -10,7 +10,7 @@ import java.util.concurrent.Callable;
 
 @Command(name = "gendiff", mixinStandardHelpOptions = true,
         description = "Compares two configuration files and shows a difference.")
-public class App implements Callable {
+public class App implements Callable<String> {
 
     @Option(names = {"-f", "--format"}, paramLabel = "format", description = "output format [default: stylish]")
     private String format = "stylish";
@@ -22,15 +22,13 @@ public class App implements Callable {
     private String filepath2;
     @Override
     public String call() throws IOException {
-        String difference = Differ.generate(filepath1, filepath2);
-        System.out.println(difference);
-        return difference;
+        return Differ.generate(filepath1, filepath2);
     }
 
     public static void main(String[] args) {
         try {
             System.exit(new CommandLine(new App()).execute(args));
-            throw new IOException("File does not found");
+            throw new IOException("File not found");
         } catch (IOException exception) {
             exception.getMessage();
         }
