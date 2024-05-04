@@ -1,4 +1,8 @@
 package hexlet.code.formatters;
 
-public class Formatter {
+import java.util.List;
+import java.util.Map;
+
+public abstract class Formatter {
+    abstract Format getFormat();
 }

@@ -1,16 +1,26 @@
 package hexlet.code;
 
 
-import hexlet.code.parsers.*;
+import hexlet.code.formatters.Formatter;
+import hexlet.code.formatters.Stylish;
+import hexlet.code.parsers.Parser;
+import hexlet.code.parsers.ParserFactory;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Stream;
 
 
 final class Differ {
@@ -40,8 +50,15 @@ final class Differ {
         Map<String, Object> sortedData1 = sortMap(parsedData1);
         Map<String, Object> sortedData2 = sortMap(parsedData2);
 
+        List<Map<String, Object>> maps = Difference.generateDifference(sortedData1, sortedData2);
 
+        Stylish stylish = new Stylish();
+        String s = stylish.outputFormatting(maps);
+        System.out.println(s);
         return "";
+
+
+
     }
 
     private static File retrieveFileData(Path pathToFile) {
