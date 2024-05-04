@@ -29,7 +29,7 @@ final class Differ {
         String extension2 = file2Extension.map(String::toString).orElse(" ");
 
         Parser parser1 = ParserFactory.getParser(extension1);
-        Parser parser2 = ParserFactory.getParser(extension1);
+        Parser parser2 = ParserFactory.getParser(extension2);
 
         File fileData1 = retrieveFileData(normalizedPath1);
         File fileData2 = retrieveFileData(normalizedPath2);
