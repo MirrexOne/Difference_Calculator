@@ -36,14 +36,11 @@ final class Differ {
 
         Map<String, Object> parsedData1 = parser1.parse(fileData1);
         Map<String, Object> parsedData2 = parser2.parse(fileData2);
-        System.out.println(parsedData1);
-        System.out.println(parsedData2);
-        System.out.println();
+
         Map<String, Object> sortedData1 = sortMap(parsedData1);
         Map<String, Object> sortedData2 = sortMap(parsedData2);
-        System.out.println(sortedData1);
-        System.out.println();
-        System.out.println(sortedData2);
+
+
         return "";
     }
 
