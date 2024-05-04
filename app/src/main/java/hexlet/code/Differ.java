@@ -52,9 +52,11 @@ final class Differ {
 
         List<Map<String, Object>> maps = Difference.generateDifference(sortedData1, sortedData2);
 
-        Stylish stylish = new Stylish();
-        String s = stylish.outputFormatting(maps);
-        System.out.println(s);
+        maps.forEach(System.out::println);
+
+//        Stylish stylish = new Stylish();
+//        String s = stylish.outputFormatting(maps);
+//        System.out.println(s);
         return "";
 
 
