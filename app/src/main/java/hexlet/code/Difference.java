@@ -20,7 +20,7 @@ public class Difference {
             if ((fileData1.containsKey(key) && fileData2.containsKey(key))
                     && (Objects.deepEquals(value1, fileData2.get(key)))) {
 
-                Map<String, Object> unchangedKey = new HashMap<>();
+                Map<String, Object> unchangedKey = new LinkedHashMap<>();
                 unchangedKey.put(key, "Unchanged key");
                 unchangedKey.put("unchanged value", value1);
                 differenceStore.add(unchangedKey);
@@ -29,7 +29,7 @@ public class Difference {
             } else if ((fileData1.containsKey(key) && fileData2.containsKey(key))
                     && (!Objects.deepEquals(value1, fileData2.get(key)))) {
 
-                Map<String, Object> modifiedKey = new HashMap<>();
+                Map<String, Object> modifiedKey = new LinkedHashMap<>();
                 modifiedKey.put(key,"Modified key");
                 modifiedKey.put("value before", value1);
                 modifiedKey.put("value after", fileData2.get(key));
@@ -37,7 +37,7 @@ public class Difference {
 
             } else if (!(fileData1.containsKey(key) && fileData2.containsKey(key))) {
 
-                Map<String, Object> deletedKey = new HashMap<>();
+                Map<String, Object> deletedKey = new LinkedHashMap<>();
                 deletedKey.put(key, "Deleted key");
                 deletedKey.put("deleted value", value1);
                 differenceStore.add(deletedKey);
@@ -47,7 +47,7 @@ public class Difference {
         fileData2.forEach((key, value) -> {
             if (!fileData1.containsKey(key)) {
 
-                Map<String, Object> addedKey = new HashMap<>();
+                Map<String, Object> addedKey = new LinkedHashMap<>();
                 addedKey.put(key, "Added key");
                 addedKey.put("added value", value);
                 differenceStore.add(addedKey);
@@ -56,5 +56,4 @@ public class Difference {
 
         return differenceStore;
     }
-
 }

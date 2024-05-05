@@ -1,22 +1,27 @@
 package hexlet.code;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
+import java.util.Comparator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
+import java.util.Map.Entry;
 
-public class Maps {
+class Maps {
 
+    public static List<Map<String, Object>> sortMapsByKey(List<Map<String, Object>> listMaps) {
+        List<Map<String, Object>> sortedList = new ArrayList<>(listMaps);
 
-//    public static void sortMapByKey(List<Map<String, Object>> mapList)
-//    {
-//        Set<String> strings = mapList.stream().collect(Collectors.toSet());
-//
-//        ArrayList<String> sortKeys = new ArrayList<>();
-//
-//
-//    }
+        sortedList.sort(Comparator.comparing(map -> map.keySet().toString()));
+
+        return sortedList;
+    }
+
+    public static Map<String, Object> sortMap(Map<String, Object> unsortedMap) {
+        Map<String, Object> sortedParsedMap = new LinkedHashMap<>();
+        unsortedMap.entrySet().stream()
+                .sorted(Entry.comparingByKey())
+                .forEachOrdered(el -> sortedParsedMap.put(el.getKey(), el.getValue()));
+        return sortedParsedMap;
+    }
 }

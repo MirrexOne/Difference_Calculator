@@ -1,6 +1,5 @@
 package hexlet.code;
 
-
 import hexlet.code.formatters.Formatter;
 import hexlet.code.formatters.Stylish;
 import hexlet.code.parsers.Parser;
@@ -11,16 +10,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Stream;
 
 
 final class Differ {
@@ -47,16 +39,22 @@ final class Differ {
         Map<String, Object> parsedData1 = parser1.parse(fileData1);
         Map<String, Object> parsedData2 = parser2.parse(fileData2);
 
-        Map<String, Object> sortedData1 = sortMap(parsedData1);
-        Map<String, Object> sortedData2 = sortMap(parsedData2);
+        Map<String, Object> sortedData1 = Maps.sortMap(parsedData1);
+        Map<String, Object> sortedData2 = Maps.sortMap(parsedData2);
 
         List<Map<String, Object>> maps = Difference.generateDifference(sortedData1, sortedData2);
 
-        maps.forEach(System.out::println);
+        List<Map<String, Object>> mapsSorted = Maps.sortMapsByKey(maps);
 
-//        Stylish stylish = new Stylish();
-//        String s = stylish.outputFormatting(maps);
-//        System.out.println(s);
+        for (var map : mapsSorted) {
+            System.out.println(map);
+        }
+
+        System.out.println();
+
+        Stylish stylish = new Stylish();
+        String s = stylish.outputFormatting(mapsSorted);
+        System.out.println(s);
         return "";
 
 
@@ -81,13 +79,5 @@ final class Differ {
         return Optional.ofNullable(filename)
                 .filter(f -> f.contains("."))
                 .map(f -> f.substring(filename.lastIndexOf(".") + 1));
-    }
-
-    private static Map<String, Object> sortMap(Map<String, Object> unsortedMap) {
-        Map<String, Object> sortedParsedMap = new LinkedHashMap<>();
-        unsortedMap.entrySet().stream()
-                .sorted(Map.Entry.comparingByKey())
-                .forEachOrdered(el -> sortedParsedMap.put(el.getKey(), el.getValue()));
-        return sortedParsedMap;
     }
 }
