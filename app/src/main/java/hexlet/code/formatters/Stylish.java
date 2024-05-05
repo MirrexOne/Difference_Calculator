@@ -43,6 +43,7 @@ public class Stylish extends Format {
             }
 
         }
+
         stylish.append("}");
         return stylish.toString();
     }

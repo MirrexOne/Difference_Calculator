@@ -12,8 +12,9 @@ import java.util.concurrent.Callable;
         description = "Compares two configuration files and shows a difference.")
 class App implements Callable<String> {
 
-    @Option(names = {"-f", "--format"}, paramLabel = "format", description = "output format [default: stylish]")
-    private String format = "stylish";
+    @Option(names = {"-f", "--format"}, paramLabel = "format",
+            description = "output format [default: ${DEFAULT-VALUE}]", defaultValue = "stylish")
+    private String format;
 
     @Parameters(index = "0", paramLabel = "filepath1", description = "Path to first file")
     private String filepath1;
@@ -23,7 +24,9 @@ class App implements Callable<String> {
 
     @Override
     public String call() throws IOException {
-        return Differ.generate(filepath1, filepath2);
+        String generate = Differ.generate(filepath1, filepath2, format);
+        System.out.println(generate);
+        return generate;
     }
 
     public static void main(String[] args) {

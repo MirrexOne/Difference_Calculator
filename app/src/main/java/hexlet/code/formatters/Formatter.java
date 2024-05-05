@@ -1,5 +1,10 @@
 package hexlet.code.formatters;
 
 public abstract class Formatter {
-    abstract Format getFormat();
+     public static Format getFormat(String format) {
+        return switch (format) {
+            default -> new Stylish();
+        };
+
+    }
 }

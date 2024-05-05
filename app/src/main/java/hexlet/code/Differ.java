@@ -1,5 +1,6 @@
 package hexlet.code;
 
+import hexlet.code.formatters.Format;
 import hexlet.code.formatters.Formatter;
 import hexlet.code.formatters.Stylish;
 import hexlet.code.parsers.Parser;
@@ -20,7 +21,7 @@ final class Differ {
     private Differ() {
     }
 
-    public static String generate(String pathToFile1, String pathToFile2) throws IOException {
+    public static String generate(String pathToFile1, String pathToFile2, String outputFormat) throws IOException {
         Path normalizedPath1 = normalizePath(pathToFile1);
         Path normalizedPath2 = normalizePath(pathToFile2);
 
@@ -46,19 +47,8 @@ final class Differ {
 
         List<Map<String, Object>> mapsSorted = Maps.sortMapsByKey(maps);
 
-        for (var map : mapsSorted) {
-            System.out.println(map);
-        }
-
-        System.out.println();
-
-        Stylish stylish = new Stylish();
-        String s = stylish.outputFormatting(mapsSorted);
-        System.out.println(s);
-        return "";
-
-
-
+        Format format = Formatter.getFormat(outputFormat);
+        return format.outputFormatting(mapsSorted);
     }
 
     private static File retrieveFileData(Path pathToFile) {
