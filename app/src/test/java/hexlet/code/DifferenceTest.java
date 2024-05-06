@@ -1,18 +1,22 @@
 package hexlet.code;
 
+import hexlet.code.formatters.Format;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
-import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-class DifferTest {
+class DifferenceTest {
 
+    private Format format1;
+    private Format format2;
+    private String extension1;
+    private String extension2;
     private String pathToJsonFile1;
     private String pathToJsonFile2;
     private String pathToYamlFile1;
@@ -63,8 +67,8 @@ class DifferTest {
                 +
                 "{Added key=obj1}]";
 
-//        List<Map<String, Object>> actual = Difference.generateDifference(jsonParsedData1, jsonParsedData2);
-//        assertEquals(expected, actual.toString());
+        List<Map<String, Object>> actual = Difference.generateDifference(jsonParsedData1, jsonParsedData2);
+        assertEquals(expected, actual.toString());
     }
 
     @Test
@@ -85,7 +89,13 @@ class DifferTest {
                 +
                 " {Deleted key=partridges}]";
 
-//        List<Map<String, Object>> actual = Difference.generateDifference(yamlParsedData1, yamlParsedData2);
-//        assertEquals(expected, actual.toString());
+        List<Map<String, Object>> actual = Difference.generateDifference(yamlParsedData1, yamlParsedData2);
+        assertEquals(expected, actual.toString());
+    }
+
+    @Test
+    void testGetFileExtension() {
+        String expected = "json";
+
     }
 }

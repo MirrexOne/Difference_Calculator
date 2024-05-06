@@ -21,34 +21,34 @@ final class Differ {
     }
 
     public static String generate(String pathToFile1, String pathToFile2, String outputFormat) throws IOException {
-        Path normalizedPath1 = normalizePath(pathToFile1);
-        Path normalizedPath2 = normalizePath(pathToFile2);
+        Path normalizedFirstFilePath = normalizePath(pathToFile1);
+        Path normalizedSecondFilePath = normalizePath(pathToFile2);
 
-        Optional<String> file1Extension = getFileExtension(pathToFile1);
-        Optional<String> file2Extension = getFileExtension(pathToFile2);
+        Optional<String> firstExtractedExtension = getFileExtension(pathToFile1);
+        Optional<String> secondExtractedExtension = getFileExtension(pathToFile2);
 
-        String extension1 = file1Extension.map(String::toString).orElse(" ");
-        String extension2 = file2Extension.map(String::toString).orElse(" ");
+        String firstFileExtension = firstExtractedExtension.map(String::toString).orElse(" ");
+        String secondFileExtension = secondExtractedExtension.map(String::toString).orElse(" ");
 
-        Parser parser1 = ParserFactory.getParser(extension1);
-        Parser parser2 = ParserFactory.getParser(extension2);
+        Parser firstFileParser = ParserFactory.getParser(firstFileExtension);
+        Parser secondFileParser = ParserFactory.getParser(secondFileExtension);
 
-        File fileData1 = retrieveFileData(normalizedPath1);
-        File fileData2 = retrieveFileData(normalizedPath2);
+        File firstFileRetrievedData = retrieveFileData(normalizedFirstFilePath);
+        File secondFileRetrievedData = retrieveFileData(normalizedSecondFilePath);
 
-        Map<String, Object> parsedData1 = parser1.parse(fileData1);
-        Map<String, Object> parsedData2 = parser2.parse(fileData2);
+        Map<String, Object> firstFileParsedData = firstFileParser.parse(firstFileRetrievedData);
+        Map<String, Object> secondFileParsedData = secondFileParser.parse(secondFileRetrievedData);
 
-        Map<String, Object> sortedData1 = Maps.sortMap(parsedData1);
-        Map<String, Object> sortedData2 = Maps.sortMap(parsedData2);
+        Map<String, Object> firstFileSortedData = Maps.sortMap(firstFileParsedData);
+        Map<String, Object> secondFileSortedData = Maps.sortMap(secondFileParsedData);
 
-        List<Map<String, Object>> maps = Difference.generateDifference(sortedData1, sortedData2);
+        List<Map<String, Object>> differenceTree = Difference.generateDifference(firstFileSortedData, secondFileSortedData);
+        System.out.println(differenceTree);
+        List<Map<String, Object>> sortedDifferenceTree = Maps.sortMapsByKey(differenceTree);
 
-        List<Map<String, Object>> mapsSorted = Maps.sortMapsByKey(maps);
+        Format requiredRenderingFormat = Formatter.getFormat(outputFormat);
 
-        Format format = Formatter.getFormat(outputFormat);
-
-        return format.outputFormatting(mapsSorted);
+        return requiredRenderingFormat.outputFormatting(sortedDifferenceTree);
     }
 
     private static File retrieveFileData(Path pathToFile) {
