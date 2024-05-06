@@ -59,7 +59,7 @@ final class Differ {
         Path normalizeAbsolutePath = Paths.get(path).toAbsolutePath().normalize();
 
         if (!Files.exists(normalizeAbsolutePath)) {
-            throw new IOException("File '" + normalizeAbsolutePath + "' does not exist");
+            throw new IOException("File '" + normalizeAbsolutePath + "' does not found");
         }
 
         return normalizeAbsolutePath;

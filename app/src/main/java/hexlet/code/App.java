@@ -34,7 +34,8 @@ class App implements Callable<String> {
             System.exit(new CommandLine(new App()).execute(args));
             throw new IOException("File not found");
         } catch (IOException exception) {
-            exception.getMessage();
+            String message = exception.getMessage();
+            System.out.println(message);
         }
     }
 
