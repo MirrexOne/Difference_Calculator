@@ -12,7 +12,7 @@ public class Stylish extends Format {
     public String outputFormatting(List<Map<String, Object>> differenceTree) {
         String indents = " ".repeat(4);
 
-        StringBuilder stylish = new StringBuilder();
+        StringBuilder stylish = new StringBuilder("\n");
         stylish.append("{" + "\n");
 
 
@@ -44,7 +44,7 @@ public class Stylish extends Format {
 
         }
 
-        stylish.append("}");
+        stylish.append("}").append("\n");
         return stylish.toString();
     }
 }
