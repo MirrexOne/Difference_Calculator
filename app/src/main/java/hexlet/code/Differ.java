@@ -2,7 +2,6 @@ package hexlet.code;
 
 import hexlet.code.formatters.Format;
 import hexlet.code.formatters.Formatter;
-import hexlet.code.formatters.Stylish;
 import hexlet.code.parsers.Parser;
 import hexlet.code.parsers.ParserFactory;
 
@@ -48,6 +47,7 @@ final class Differ {
         List<Map<String, Object>> mapsSorted = Maps.sortMapsByKey(maps);
 
         Format format = Formatter.getFormat(outputFormat);
+
         return format.outputFormatting(mapsSorted);
     }
 
