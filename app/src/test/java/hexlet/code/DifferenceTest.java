@@ -146,8 +146,7 @@ class DifferenceTest {
                 +
                 "Property 'setting2' was updated. From 200 to 300\n"
                 +
-                "Property 'setting3' was updated. From true to 'none'"
-                + "\n";
+                "Property 'setting3' was updated. From true to 'none'\n";
 
         String actual = Differ.generate(pathToFirstJsonFile, pathToSecondJsonFile, "plain");
         assertEquals(expected, actual);
@@ -164,8 +163,7 @@ class DifferenceTest {
                 +
                 "Property 'xmas' was updated. From true to false\n"
                 +
-                "Property 'xmas-fifth-day' was updated. From [complex value] to [complex value]"
-                + "\n";
+                "Property 'xmas-fifth-day' was updated. From [complex value] to [complex value]\n";
 
         String actual = Differ.generate(pathToFirstYamlFile, pathToSecondYamlFile, "plain");
         assertEquals(expected, actual);
