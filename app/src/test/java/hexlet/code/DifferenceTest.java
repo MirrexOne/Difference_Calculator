@@ -1,6 +1,5 @@
 package hexlet.code;
 
-import hexlet.code.parsers.Parser;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -159,10 +158,14 @@ class DifferenceTest {
     @Test
     void testPlainGenerateDifferenceYaml() throws IOException {
         String expected = "\n" +
-                "Property 'doe' was updated. From 'a deer, a female deer' to 'cat'\n" +
-                "Property 'partridges' was removed\n" +
-                "Property 'ray' was updated. From 'a drop of golden sun' to 'Crucial moment of the world'\n" +
-                "Property 'xmas' was updated. From true to false\n" +
+                "Property 'doe' was updated. From 'a deer, a female deer' to 'cat'\n"
+                +
+                "Property 'partridges' was removed\n"
+                +
+                "Property 'ray' was updated. From 'a drop of golden sun' to 'Crucial moment of the world'\n"
+                +
+                "Property 'xmas' was updated. From true to false\n"
+                +
                 "Property 'xmas-fifth-day' was updated. From [complex value] to [complex value]\n";
 
         String actual = Differ.generate(pathToFirstYamlFile, pathToSecondYamlFile, "plain");
