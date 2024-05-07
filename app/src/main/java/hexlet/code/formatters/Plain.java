@@ -2,12 +2,14 @@ package hexlet.code.formatters;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 public class Plain extends Format {
     @Override
     public String outputFormatting(List<Map<String, Object>> differenceTree) {
         StringBuilder plain = new StringBuilder("\n");
+        final String DEFINITION_OF_KEY = "Property";
 
         for (Map<String, Object> entry : differenceTree) {
             Set<Map.Entry<String, Object>> entries = entry.entrySet();
@@ -16,25 +18,25 @@ public class Plain extends Format {
                 String key = pairs.getKey();
                 Object value = pairs.getValue();
 
-                if ("Modified key".equals(value)) {
-                    Object valueBefore = changeRenderingValue(entry.get("value before"));
-                    Object valueAfter = changeRenderingValue(entry.get("value after"));
+                if ("modified".equals(value)) {
+                    Object valueBefore = changeRenderingValue(entry.get("value1"));
+                    Object valueAfter = changeRenderingValue(entry.get("value2"));
 
-                    plain.append("Property").append(" '").append(key).append("' ").append("was updated. ")
+                    plain.append(DEFINITION_OF_KEY).append(" '").append(key).append("' ").append("was updated. ")
                             .append("From ").append(valueBefore).append(" to ").append(valueAfter).append("\n");
 
-                } else if ("Added key".equals(value)) {
-                    Object addedValue = changeRenderingValue(entry.get("added value"));
+                } else if ("added".equals(value)) {
+                    Object addedValue = changeRenderingValue(entry.get("value"));
 
-                    plain.append("Property").append(" '").append(key).append("' ").append("was added with value: ")
-                            .append(addedValue).append("\n");
+                    plain.append(DEFINITION_OF_KEY).append(" '").append(key).append("' ")
+                            .append("was added with value: ").append(addedValue).append("\n");
 
-                } else if ("Deleted key".equals(value)) {
+                } else if ("deleted".equals(value)) {
 
-                    plain.append("Property").append(" '").append(key).append("' ").append("was removed").append("\n");
+                    plain.append(DEFINITION_OF_KEY).append(" '").append(key).append("' ")
+                            .append("was removed").append("\n");
                 }
             }
-
         }
 
         return plain.toString();
@@ -56,6 +58,6 @@ public class Plain extends Format {
     }
 
     private boolean isComplexValue(Object value) {
-        return value instanceof List<?> || value instanceof Map<?,?>;
+        return (Objects.nonNull(value)) && (value instanceof List<?> || value instanceof Map<?, ?>);
     }
 }

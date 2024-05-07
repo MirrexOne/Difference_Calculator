@@ -1,160 +1,125 @@
 package hexlet.code;
 
 import hexlet.code.parsers.Parser;
-import hexlet.code.parsers.ParserFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Path;
-import java.util.List;
-import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class DifferenceTest {
-    
-    
-    private Parser firstJsonParser;
-    private Parser secondJsonParser;
-    private Parser firstYamlParser;
-    private Parser secondYamlParser;
 
-    private String extensionFirstJson;
-    private String extensionSecondJson;
-    private String extensionFirstYaml;
-    private String extensionSecondYaml;
-
+    private static final String PATH_TO_FIXTURES = "./src/test/resources/fixtures/";
     private String pathToFirstJsonFile;
     private String pathToSecondJsonFile;
     private String pathToFirstYamlFile;
     private String pathToSecondYamlFile;
 
-    private Path firstJsonNormalizedPath;
-    private Path secondJsonNormalizedPath;
-    private Path firstYamlNormalizedPath;
-    private Path secondYamlNormalizedPath;
-
-    private File firstJsonRetrievedData;
-    private File secondJsonRetrievedData;
-    private File firstYamlRetrievedData;
-    private File secondYamlRetrievedData;
-
-    private Map<String, Object> firstJsonParsedData;
-    private Map<String, Object> secondJsonParsedData;
-    private Map<String, Object> firstYamlParsedData;
-    private Map<String, Object> secondYamlParsedData;
-
     @BeforeEach
     public void beforeAll() throws IOException {
-        pathToFirstJsonFile = "./src/test/resources/fixtures/file5JsonNested.json";
-        pathToSecondJsonFile = "./src/test/resources/fixtures/file6JsonNested.json";
-        pathToFirstYamlFile = "./src/test/resources/fixtures/file7YamlNested.yaml";
-        pathToSecondYamlFile = "./src/test/resources/fixtures/file8YamlNested.yaml";
-        
-        extensionFirstJson = FileSystem.getFileExtension(pathToFirstJsonFile).map(String::toString).orElse(" ");
-        extensionSecondJson = FileSystem.getFileExtension(pathToSecondJsonFile).map(String::toString).orElse(" ");
-        extensionFirstYaml = FileSystem.getFileExtension(pathToFirstYamlFile).map(String::toString).orElse(" ");
-        extensionSecondYaml = FileSystem.getFileExtension(pathToSecondYamlFile).map(String::toString).orElse(" ");
-
-        firstJsonParser = ParserFactory.getParser(extensionFirstJson);
-        secondJsonParser = ParserFactory.getParser(extensionSecondJson);
-        firstYamlParser = ParserFactory.getParser(extensionFirstYaml);
-        secondYamlParser = ParserFactory.getParser(extensionSecondYaml);
-
-        firstJsonNormalizedPath = FileSystem.normalizePath(pathToFirstJsonFile);
-        secondJsonNormalizedPath = FileSystem.normalizePath(pathToSecondJsonFile);
-        firstYamlNormalizedPath = FileSystem.normalizePath(pathToFirstYamlFile);
-        secondYamlNormalizedPath = FileSystem.normalizePath(pathToSecondYamlFile);
-
-        firstJsonRetrievedData = FileSystem.retrieveFileData(firstJsonNormalizedPath);
-        secondJsonRetrievedData = FileSystem.retrieveFileData(secondJsonNormalizedPath);
-        firstYamlRetrievedData = FileSystem.retrieveFileData(firstYamlNormalizedPath);
-        secondYamlRetrievedData = FileSystem.retrieveFileData(secondYamlNormalizedPath);
-
-        firstJsonParsedData = firstJsonParser.parse(firstJsonRetrievedData);
-        secondJsonParsedData = secondJsonParser.parse(secondJsonRetrievedData);
-        firstYamlParsedData = firstYamlParser.parse(firstYamlRetrievedData);
-        secondYamlParsedData = secondYamlParser.parse(secondYamlRetrievedData);
-
-        
-        
+        pathToFirstJsonFile = PATH_TO_FIXTURES + "file5JsonNested.json";
+        pathToSecondJsonFile = PATH_TO_FIXTURES + "file6JsonNested.json";
+        pathToFirstYamlFile = PATH_TO_FIXTURES + "file7YamlNested.yaml";
+        pathToSecondYamlFile = PATH_TO_FIXTURES + "file8YamlNested.yaml";
 
     }
 
     @Test
-    void testGenerateTreeDifferenceJson() {
-        String expected = "[{setting1=Modified key, value before=Some value, value after=Another value},"
+    void testDefaultGenerateDifferenceJson() throws IOException {
+        String expected = "\n"
                 +
-                " {setting2=Modified key, value before=200, value after=300},"
+                "{\n"
                 +
-                " {setting3=Modified key, value before=true, value after=none},"
+                "      chars1: [a, b, c]\n"
                 +
-                " {key1=Deleted key, deleted value=value1},"
+                "    - chars2: [d, e, f]\n"
                 +
-                " {numbers1=Unchanged key, unchanged value=[1, 2, 3, 4]},"
+                "    + chars2: false\n"
                 +
-                " {numbers2=Modified key, value before=[2, 3, 4, 5], value after=[22, 33, 44, 55]},"
+                "    - checked: false\n"
                 +
-                " {id=Modified key, value before=45, value after=null},"
+                "    + checked: true\n"
                 +
-                " {default=Modified key, value before=null, value after=[value1, value2]},"
+                "    - default: null\n"
                 +
-                " {checked=Modified key, value before=false, value after=true},"
+                "    + default: [value1, value2]\n"
                 +
-                " {numbers3=Deleted key, deleted value=[3, 4, 5]},"
+                "    - id: 45\n"
                 +
-                " {chars1=Unchanged key, unchanged value=[a, b, c]},"
+                "    + id: null\n"
                 +
-                " {chars2=Modified key, value before=[d, e, f], value after=false},"
+                "    - key1: value1\n"
                 +
-                " {key2=Added key, added value=value2},"
+                "    + key2: value2\n"
                 +
-                " {numbers4=Added key, added value=[4, 5, 6]},"
+                "      numbers1: [1, 2, 3, 4]\n"
                 +
-                " {obj1=Added key, added value={nestedKey=value, isNested=true}}]";
+                "    - numbers2: [2, 3, 4, 5]\n"
+                +
+                "    + numbers2: [22, 33, 44, 55]\n"
+                +
+                "    - numbers3: [3, 4, 5]\n"
+                +
+                "    + numbers4: [4, 5, 6]\n"
+                +
+                "    + obj1: {nestedKey=value, isNested=true}\n"
+                +
+                "    - setting1: Some value\n"
+                +
+                "    + setting1: Another value\n"
+                +
+                "    - setting2: 200\n"
+                +
+                "    + setting2: 300\n"
+                +
+                "    - setting3: true\n"
+                +
+                "    + setting3: none\n"
+                +
+                "}\n";
 
-        List<Map<String, Object>> actual = Difference.generateDifference(firstJsonParsedData, secondJsonParsedData);
-        assertEquals(expected, actual.toString());
+        String actual = Differ.generate(pathToFirstJsonFile, pathToSecondJsonFile, "stylish");
+        assertEquals(expected, actual);
+
     }
 
     @Test
-    void testGenerateTreeDifferenceYaml() {
-        String expected = "[{doe=Modified key, value before=a deer, a female deer, value after=cat},"
+    void testDefaultGenerateDifferenceYaml() throws IOException {
+        String expected = "\n"
                 +
-                " {ray=Modified key, value before=a drop of golden sun, value after=Crucial moment of the world},"
+                "{\n"
                 +
-                " {pi=Unchanged key, unchanged value=3.14159},"
+                "      calling-birds: [huey, dewey, louie, fred]\n"
                 +
-                " {xmas=Modified key, value before=true, value after=false},"
+                "    - doe: a deer, a female deer\n"
                 +
-                " {french-hens=Unchanged key, unchanged value=3},"
+                "    + doe: cat\n"
                 +
-                " {calling-birds=Unchanged key, unchanged value=[huey, dewey, louie, fred]},"
+                "      french-hens: 3\n"
                 +
-                " {xmas-fifth-day=Modified key, value before={calling-birds=four, french-hens=3, golden-rings=5},"
+                "    - partridges: {count=1, location=a pear tree, turtle-doves=two}\n"
                 +
-                " value after={calling-birds=four, french-hens=3, golden-rings=1,"
+                "      pi: 3.14159\n"
                 +
-                " partridges={count=1, location=a pear tree}, turtle-doves=two}},"
+                "    - ray: a drop of golden sun\n"
                 +
-                " {partridges=Deleted key, deleted value={count=1, location=a pear tree, turtle-doves=two}}]";
+                "    + ray: Crucial moment of the world\n"
+                +
+                "    - xmas: true\n"
+                +
+                "    + xmas: false\n"
+                +
+                "    - xmas-fifth-day: {calling-birds=four, french-hens=3, golden-rings=5}\n"
+                +
+                "    + xmas-fifth-day: {calling-birds=four, french-hens=3, golden-rings=1, "
+                +
+                "partridges={count=1, location=a pear tree}, turtle-doves=two}\n"
+                +
+                "}\n";
 
-        List<Map<String, Object>> actual = Difference.generateDifference(firstYamlParsedData, secondYamlParsedData);
-        assertEquals(expected, actual.toString());
+        String actual = Differ.generate(pathToFirstYamlFile, pathToSecondYamlFile, "stylish");
+        assertEquals(expected, actual);
     }
 
-    @Test
-    void testGetFileExtensionJson() {
-        String expected1 = "json";
-        String expected2 = "json";
-
-        String actual1 = extensionFirstJson;
-        String actual2 = extensionSecondJson;
-
-        assertEquals(expected1, actual1);
-        assertEquals(expected2, actual2);
-    }
 }
