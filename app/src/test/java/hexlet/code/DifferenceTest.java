@@ -75,8 +75,7 @@ class DifferenceTest {
                         +
                         "    + setting3: none\n"
                         +
-                        "}"
-                        + "\n";
+                        "}";
 
         String actual = Differ.generate(pathToFirstJsonFile, pathToSecondJsonFile, "stylish");
         assertEquals(expected, actual);
@@ -114,8 +113,7 @@ class DifferenceTest {
                 +
                 "partridges={count=1, location=a pear tree}, turtle-doves=two}\n"
                 +
-                "}"
-                + "\n";
+                "}";
 
         String actual = Differ.generate(pathToFirstYamlFile, pathToSecondYamlFile, "stylish");
         assertEquals(expected, actual);
