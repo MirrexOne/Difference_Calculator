@@ -26,56 +26,56 @@ class DifferenceTest {
 
     @Test
     void testDefaultGenerateDifferenceJson() throws IOException {
-        String expected = "\n"
-                +"{\n"
-                +
-                "      chars1: [a, b, c]\n"
-                +
-                "    - chars2: [d, e, f]\n"
-                +
-                "    + chars2: false\n"
-                +
-                "    - checked: false\n"
-                +
-                "    + checked: true\n"
-                +
-                "    - default: null\n"
-                +
-                "    + default: [value1, value2]\n"
-                +
-                "    - id: 45\n"
-                +
-                "    + id: null\n"
-                +
-                "    - key1: value1\n"
-                +
-                "    + key2: value2\n"
-                +
-                "      numbers1: [1, 2, 3, 4]\n"
-                +
-                "    - numbers2: [2, 3, 4, 5]\n"
-                +
-                "    + numbers2: [22, 33, 44, 55]\n"
-                +
-                "    - numbers3: [3, 4, 5]\n"
-                +
-                "    + numbers4: [4, 5, 6]\n"
-                +
-                "    + obj1: {nestedKey=value, isNested=true}\n"
-                +
-                "    - setting1: Some value\n"
-                +
-                "    + setting1: Another value\n"
-                +
-                "    - setting2: 200\n"
-                +
-                "    + setting2: 300\n"
-                +
-                "    - setting3: true\n"
-                +
-                "    + setting3: none\n"
-                +
-                "}\n";
+        String expected =
+                "\n{\n"
+                        +
+                        "      chars1: [a, b, c]\n"
+                        +
+                        "    - chars2: [d, e, f]\n"
+                        +
+                        "    + chars2: false\n"
+                        +
+                        "    - checked: false\n"
+                        +
+                        "    + checked: true\n"
+                        +
+                        "    - default: null\n"
+                        +
+                        "    + default: [value1, value2]\n"
+                        +
+                        "    - id: 45\n"
+                        +
+                        "    + id: null\n"
+                        +
+                        "    - key1: value1\n"
+                        +
+                        "    + key2: value2\n"
+                        +
+                        "      numbers1: [1, 2, 3, 4]\n"
+                        +
+                        "    - numbers2: [2, 3, 4, 5]\n"
+                        +
+                        "    + numbers2: [22, 33, 44, 55]\n"
+                        +
+                        "    - numbers3: [3, 4, 5]\n"
+                        +
+                        "    + numbers4: [4, 5, 6]\n"
+                        +
+                        "    + obj1: {nestedKey=value, isNested=true}\n"
+                        +
+                        "    - setting1: Some value\n"
+                        +
+                        "    + setting1: Another value\n"
+                        +
+                        "    - setting2: 200\n"
+                        +
+                        "    + setting2: 300\n"
+                        +
+                        "    - setting3: true\n"
+                        +
+                        "    + setting3: none\n"
+                        +
+                        "}\n";
 
         String actual = Differ.generate(pathToFirstJsonFile, pathToSecondJsonFile, "stylish");
         assertEquals(expected, actual);
@@ -84,8 +84,8 @@ class DifferenceTest {
 
     @Test
     void testDefaultGenerateDifferenceYaml() throws IOException {
-        String expected = "\n"
-                + "{\n"
+        String expected =
+                "\n{\n"
                 +
                 "      calling-birds: [huey, dewey, louie, fred]\n"
                 +
@@ -121,7 +121,8 @@ class DifferenceTest {
 
     @Test
     void testPlainGenerateDifferenceJson() throws IOException {
-        String expected = "\n"
+        String expected =
+                "\n"
                 +
                 "Property 'chars2' was updated. From [complex value] to false\n"
                 +
@@ -155,7 +156,9 @@ class DifferenceTest {
 
     @Test
     void testPlainGenerateDifferenceYaml() throws IOException {
-        String expected = "\n" +
+        String expected =
+                "\n"
+                +
                 "Property 'doe' was updated. From 'a deer, a female deer' to 'cat'\n"
                 +
                 "Property 'partridges' was removed\n"
