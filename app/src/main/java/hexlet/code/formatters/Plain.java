@@ -39,7 +39,7 @@ public class Plain extends Format {
             }
         }
 
-        return plain.toString();
+        return plain.substring(0, plain.length() - 1);
     }
 
     private String changeRenderingValue(Object value) {
