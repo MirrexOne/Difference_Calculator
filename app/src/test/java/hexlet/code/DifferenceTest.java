@@ -136,7 +136,7 @@ class DifferenceTest {
                         Property 'setting1' was updated. From 'Some value' to 'Another value'
                         Property 'setting2' was updated. From 200 to 300
                         Property 'setting3' was updated. From true to 'none'
-
+                        \
                         """;
 
         String actual = Differ.generate(pathToFirstJsonFile, pathToSecondJsonFile, "plain");
@@ -152,7 +152,7 @@ class DifferenceTest {
                         Property 'ray' was updated. From 'a drop of golden sun' to 'Crucial moment of the world'
                         Property 'xmas' was updated. From true to false
                         Property 'xmas-fifth-day' was updated. From [complex value] to [complex value]
-
+                        \
                         """;
 
         String actual = Differ.generate(pathToFirstYamlFile, pathToSecondYamlFile, "plain");
