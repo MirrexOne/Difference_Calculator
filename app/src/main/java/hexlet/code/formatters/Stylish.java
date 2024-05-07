@@ -11,7 +11,7 @@ public class Stylish extends Format {
         String indents = " ".repeat(4);
         String keyOfValue = "value";
 
-        StringBuilder stylish = new StringBuilder("\n");
+        StringBuilder stylish = new StringBuilder();
         stylish.append("{\n");
 
         for (Map<String, Object> entry : differenceTree) {
