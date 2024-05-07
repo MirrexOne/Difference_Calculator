@@ -27,7 +27,7 @@ class DifferenceTest {
     @Test
     void testDefaultGenerateDifferenceJson() throws IOException {
         String expected =
-                "\n{\n"
+                "{\n"
                         +
                         "      chars1: [a, b, c]\n"
                         +
@@ -85,7 +85,7 @@ class DifferenceTest {
     @Test
     void testDefaultGenerateDifferenceYaml() throws IOException {
         String expected =
-                "\n{\n"
+                "{\n"
                 +
                 "      calling-birds: [huey, dewey, louie, fred]\n"
                 +
@@ -122,8 +122,6 @@ class DifferenceTest {
     @Test
     void testPlainGenerateDifferenceJson() throws IOException {
         String expected =
-                "\n"
-                +
                 "Property 'chars2' was updated. From [complex value] to false\n"
                 +
                 "Property 'checked' was updated. From false to true\n"
@@ -157,8 +155,6 @@ class DifferenceTest {
     @Test
     void testPlainGenerateDifferenceYaml() throws IOException {
         String expected =
-                "\n"
-                +
                 "Property 'doe' was updated. From 'a deer, a female deer' to 'cat'\n"
                 +
                 "Property 'partridges' was removed\n"
