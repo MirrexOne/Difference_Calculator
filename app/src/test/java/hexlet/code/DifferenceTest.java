@@ -122,31 +122,22 @@ class DifferenceTest {
     @Test
     void testPlainGenerateDifferenceJson() throws IOException {
         String expected =
-                "Property 'chars2' was updated. From [complex value] to false\n"
-                +
-                "Property 'checked' was updated. From false to true\n"
-                +
-                "Property 'default' was updated. From null to [complex value]\n"
-                +
-                "Property 'id' was updated. From 45 to null\n"
-                +
-                "Property 'key1' was removed\n"
-                +
-                "Property 'key2' was added with value: 'value2'\n"
-                +
-                "Property 'numbers2' was updated. From [complex value] to [complex value]\n"
-                +
-                "Property 'numbers3' was removed\n"
-                +
-                "Property 'numbers4' was added with value: [complex value]\n"
-                +
-                "Property 'obj1' was added with value: [complex value]\n"
-                +
-                "Property 'setting1' was updated. From 'Some value' to 'Another value'\n"
-                +
-                "Property 'setting2' was updated. From 200 to 300\n"
-                +
-                "Property 'setting3' was updated. From true to 'none'" + "\n";
+                """
+                        Property 'chars2' was updated. From [complex value] to false
+                        Property 'checked' was updated. From false to true
+                        Property 'default' was updated. From null to [complex value]
+                        Property 'id' was updated. From 45 to null
+                        Property 'key1' was removed
+                        Property 'key2' was added with value: 'value2'
+                        Property 'numbers2' was updated. From [complex value] to [complex value]
+                        Property 'numbers3' was removed
+                        Property 'numbers4' was added with value: [complex value]
+                        Property 'obj1' was added with value: [complex value]
+                        Property 'setting1' was updated. From 'Some value' to 'Another value'
+                        Property 'setting2' was updated. From 200 to 300
+                        Property 'setting3' was updated. From true to 'none'\
+
+                        """;
 
         String actual = Differ.generate(pathToFirstJsonFile, pathToSecondJsonFile, "plain");
         assertEquals(expected, actual);
@@ -155,16 +146,14 @@ class DifferenceTest {
     @Test
     void testPlainGenerateDifferenceYaml() throws IOException {
         String expected =
-                "Property 'doe' was updated. From 'a deer, a female deer' to 'cat'\n"
-                +
-                "Property 'partridges' was removed\n"
-                +
-                "Property 'ray' was updated. From 'a drop of golden sun' to 'Crucial moment of the world'\n"
-                +
-                "Property 'xmas' was updated. From true to false\n"
-                +
-                "Property 'xmas-fifth-day' was updated. From [complex value] to [complex value]"
-                + "\n";
+                """
+                        Property 'doe' was updated. From 'a deer, a female deer' to 'cat'
+                        Property 'partridges' was removed
+                        Property 'ray' was updated. From 'a drop of golden sun' to 'Crucial moment of the world'
+                        Property 'xmas' was updated. From true to false
+                        Property 'xmas-fifth-day' was updated. From [complex value] to [complex value]\
+
+                        """;
 
         String actual = Differ.generate(pathToFirstYamlFile, pathToSecondYamlFile, "plain");
         assertEquals(expected, actual);
