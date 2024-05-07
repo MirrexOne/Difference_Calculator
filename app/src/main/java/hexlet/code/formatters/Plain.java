@@ -8,7 +8,7 @@ import java.util.Set;
 public class Plain extends Format {
     @Override
     public String outputFormatting(List<Map<String, Object>> differenceTree) {
-        StringBuilder plain = new StringBuilder("\n");
+        StringBuilder plain = new StringBuilder();
         String definitionOfKey = "Property";
 
         for (Map<String, Object> entry : differenceTree) {
