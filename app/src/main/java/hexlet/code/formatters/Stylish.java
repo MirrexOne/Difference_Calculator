@@ -8,7 +8,7 @@ public class Stylish extends Format {
 
     @Override
     public String outputFormatting(List<Map<String, Object>> differenceTree) {
-        String indents = " ".repeat(4);
+        String indents = " ".repeat(2);
         String keyOfValue = "value";
 
         StringBuilder stylish = new StringBuilder();
