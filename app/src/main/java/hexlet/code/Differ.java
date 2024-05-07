@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-public class Differ {
+public final class Differ {
 
     private Differ() {
     }
