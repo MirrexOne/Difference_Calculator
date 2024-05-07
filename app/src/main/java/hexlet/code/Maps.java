@@ -9,6 +9,9 @@ import java.util.Map.Entry;
 
 class Maps {
 
+    private Maps() {
+    }
+
     public static List<Map<String, Object>> sortMapsByKey(List<Map<String, Object>> listMaps) {
         List<Map<String, Object>> sortedList = new ArrayList<>(listMaps);
 
