@@ -29,51 +29,51 @@ class DifferenceTest {
         String expected =
                 "{\n"
                         +
-                        "      chars1: [a, b, c]\n"
+                        "    chars1: [a, b, c]\n"
                         +
-                        "    - chars2: [d, e, f]\n"
+                        "  - chars2: [d, e, f]\n"
                         +
-                        "    + chars2: false\n"
+                        "  + chars2: false\n"
                         +
-                        "    - checked: false\n"
+                        "  - checked: false\n"
                         +
-                        "    + checked: true\n"
+                        "  + checked: true\n"
                         +
-                        "    - default: null\n"
+                        "  - default: null\n"
                         +
-                        "    + default: [value1, value2]\n"
+                        "  + default: [value1, value2]\n"
                         +
-                        "    - id: 45\n"
+                        "  - id: 45\n"
                         +
-                        "    + id: null\n"
+                        "  + id: null\n"
                         +
-                        "    - key1: value1\n"
+                        "  - key1: value1\n"
                         +
-                        "    + key2: value2\n"
+                        "  + key2: value2\n"
                         +
-                        "      numbers1: [1, 2, 3, 4]\n"
+                        "    numbers1: [1, 2, 3, 4]\n"
                         +
-                        "    - numbers2: [2, 3, 4, 5]\n"
+                        "  - numbers2: [2, 3, 4, 5]\n"
                         +
-                        "    + numbers2: [22, 33, 44, 55]\n"
+                        "  + numbers2: [22, 33, 44, 55]\n"
                         +
-                        "    - numbers3: [3, 4, 5]\n"
+                        "  - numbers3: [3, 4, 5]\n"
                         +
-                        "    + numbers4: [4, 5, 6]\n"
+                        "  + numbers4: [4, 5, 6]\n"
                         +
-                        "    + obj1: {nestedKey=value, isNested=true}\n"
+                        "  + obj1: {nestedKey=value, isNested=true}\n"
                         +
-                        "    - setting1: Some value\n"
+                        "  - setting1: Some value\n"
                         +
-                        "    + setting1: Another value\n"
+                        "  + setting1: Another value\n"
                         +
-                        "    - setting2: 200\n"
+                        "  - setting2: 200\n"
                         +
-                        "    + setting2: 300\n"
+                        "  + setting2: 300\n"
                         +
-                        "    - setting3: true\n"
+                        "  - setting3: true\n"
                         +
-                        "    + setting3: none\n"
+                        "  + setting3: none\n"
                         +
                         "}";
 
@@ -87,29 +87,29 @@ class DifferenceTest {
         String expected =
                 "{\n"
                 +
-                "      calling-birds: [huey, dewey, louie, fred]\n"
+                "    calling-birds: [huey, dewey, louie, fred]\n"
                 +
-                "    - doe: a deer, a female deer\n"
+                "  - doe: a deer, a female deer\n"
                 +
-                "    + doe: cat\n"
+                "  + doe: cat\n"
                 +
-                "      french-hens: 3\n"
+                "    french-hens: 3\n"
                 +
-                "    - partridges: {count=1, location=a pear tree, turtle-doves=two}\n"
+                "  - partridges: {count=1, location=a pear tree, turtle-doves=two}\n"
                 +
-                "      pi: 3.14159\n"
+                "    pi: 3.14159\n"
                 +
-                "    - ray: a drop of golden sun\n"
+                "  - ray: a drop of golden sun\n"
                 +
-                "    + ray: Crucial moment of the world\n"
+                "  + ray: Crucial moment of the world\n"
                 +
-                "    - xmas: true\n"
+                "  - xmas: true\n"
                 +
-                "    + xmas: false\n"
+                "  + xmas: false\n"
                 +
-                "    - xmas-fifth-day: {calling-birds=four, french-hens=3, golden-rings=5}\n"
+                "  - xmas-fifth-day: {calling-birds=four, french-hens=3, golden-rings=5}\n"
                 +
-                "    + xmas-fifth-day: {calling-birds=four, french-hens=3, golden-rings=1, "
+                "  + xmas-fifth-day: {calling-birds=four, french-hens=3, golden-rings=1, "
                 +
                 "partridges={count=1, location=a pear tree}, turtle-doves=two}\n"
                 +
