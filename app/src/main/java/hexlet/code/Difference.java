@@ -14,7 +14,7 @@ final class Difference {
 
     static List<Map<String, Object>> generateDifference(Map<String, Object> fileData1, Map<String, Object> fileData2) {
         List<Map<String, Object>> differenceStore = new ArrayList<>();
-        final String KEY_OF_VALUE = "value";
+        String keyOfValue = "value";
 
         fileData1.forEach((key, value1) -> {
             if ((fileData1.containsKey(key) && fileData2.containsKey(key))
@@ -22,7 +22,7 @@ final class Difference {
 
                 Map<String, Object> unchangedKey = new LinkedHashMap<>();
                 unchangedKey.put(key, "unchanged");
-                unchangedKey.put(KEY_OF_VALUE, value1);
+                unchangedKey.put(keyOfValue, value1);
                 differenceStore.add(unchangedKey);
 
             } else if ((fileData1.containsKey(key) && fileData2.containsKey(key))
@@ -38,7 +38,7 @@ final class Difference {
 
                 Map<String, Object> deletedKey = new LinkedHashMap<>();
                 deletedKey.put(key, "deleted");
-                deletedKey.put(KEY_OF_VALUE, value1);
+                deletedKey.put(keyOfValue, value1);
                 differenceStore.add(deletedKey);
             }
         });
@@ -48,7 +48,7 @@ final class Difference {
 
                 Map<String, Object> addedKey = new LinkedHashMap<>();
                 addedKey.put(key, "added");
-                addedKey.put(KEY_OF_VALUE, value);
+                addedKey.put(keyOfValue, value);
                 differenceStore.add(addedKey);
             }
         });
