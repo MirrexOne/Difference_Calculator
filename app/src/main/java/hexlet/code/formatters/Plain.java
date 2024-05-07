@@ -6,7 +6,7 @@ import java.util.Objects;
 import java.util.Set;
 
 public class Plain extends Format {
-    public String outputFormatting(List<Map<String, Object>> differenceTree) {
+    public final String outputFormatting(List<Map<String, Object>> differenceTree) {
         StringBuilder plain = new StringBuilder();
         String definitionOfKey = "Property";
 
