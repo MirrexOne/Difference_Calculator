@@ -29,7 +29,7 @@ final class Difference {
                     && (!Objects.deepEquals(value1, fileData2.get(key)))) {
 
                 Map<String, Object> modifiedKey = new LinkedHashMap<>();
-                modifiedKey.put(key,"modified");
+                modifiedKey.put(key, "modified");
                 modifiedKey.put("value1", value1);
                 modifiedKey.put("value2", fileData2.get(key));
                 differenceStore.add(modifiedKey);

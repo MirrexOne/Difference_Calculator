@@ -9,7 +9,7 @@ public class Stylish extends Format {
     @Override
     public String outputFormatting(List<Map<String, Object>> differenceTree) {
         String indents = " ".repeat(4);
-        final String KEY_OF_VALUE = "value";
+        String keyOfValue = "value";
 
         StringBuilder stylish = new StringBuilder("\n");
         stylish.append("{\n");
@@ -22,7 +22,7 @@ public class Stylish extends Format {
                 Object value = pairs.getValue();
                 if ("unchanged".equals(value)) {
                     stylish.append(indents).append("  ").append(key).append(": ")
-                            .append(entry.get(KEY_OF_VALUE)).append("\n");
+                            .append(entry.get(keyOfValue)).append("\n");
                 } else if ("modified".equals(value)) {
                     stylish.append(indents).append("- ").append(key).append(": ")
                             .append(entry.get("value1")).append("\n");
@@ -31,11 +31,11 @@ public class Stylish extends Format {
 
                 } else if ("added".equals(value)) {
                     stylish.append(indents).append("+ ").append(key).append(": ")
-                            .append(entry.get(KEY_OF_VALUE)).append("\n");
+                            .append(entry.get(keyOfValue)).append("\n");
 
                 } else if ("deleted".equals(value)) {
                     stylish.append(indents).append("- ").append(key).append(": ")
-                            .append(entry.get(KEY_OF_VALUE)).append("\n");
+                            .append(entry.get(keyOfValue)).append("\n");
 
                 }
             }
