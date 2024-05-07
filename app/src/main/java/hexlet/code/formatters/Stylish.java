@@ -41,7 +41,7 @@ public class Stylish extends Format {
             }
         }
 
-        stylish.append("}\n");
+        stylish.append("}");
         return stylish.toString();
     }
 }
