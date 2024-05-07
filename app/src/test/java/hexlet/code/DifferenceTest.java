@@ -135,7 +135,7 @@ class DifferenceTest {
                         Property 'obj1' was added with value: [complex value]
                         Property 'setting1' was updated. From 'Some value' to 'Another value'
                         Property 'setting2' was updated. From 200 to 300
-                        Property 'setting3' was updated. From true to 'none'\
+                        Property 'setting3' was updated. From true to 'none'
 
                         """;
 
@@ -151,7 +151,7 @@ class DifferenceTest {
                         Property 'partridges' was removed
                         Property 'ray' was updated. From 'a drop of golden sun' to 'Crucial moment of the world'
                         Property 'xmas' was updated. From true to false
-                        Property 'xmas-fifth-day' was updated. From [complex value] to [complex value]\
+                        Property 'xmas-fifth-day' was updated. From [complex value] to [complex value]
 
                         """;
 
