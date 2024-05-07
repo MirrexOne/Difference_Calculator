@@ -7,15 +7,16 @@ import hexlet.code.parsers.ParserFactory;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import static hexlet.code.FileSystem.getFileExtension;
+import static hexlet.code.FileSystem.normalizePath;
+import static hexlet.code.FileSystem.retrieveFileData;
 
-final class Differ {
+class Differ {
 
     private Differ() {
     }
@@ -43,31 +44,11 @@ final class Differ {
         Map<String, Object> secondFileSortedData = Maps.sortMap(secondFileParsedData);
 
         List<Map<String, Object>> differenceTree = Difference.generateDifference(firstFileSortedData, secondFileSortedData);
-        System.out.println(differenceTree);
+
         List<Map<String, Object>> sortedDifferenceTree = Maps.sortMapsByKey(differenceTree);
 
         Format requiredRenderingFormat = Formatter.getFormat(outputFormat);
 
         return requiredRenderingFormat.outputFormatting(sortedDifferenceTree);
-    }
-
-    private static File retrieveFileData(Path pathToFile) {
-        return pathToFile.toFile();
-    }
-
-    private static Path normalizePath(String path) throws IOException {
-        Path normalizeAbsolutePath = Paths.get(path).toAbsolutePath().normalize();
-
-        if (!Files.exists(normalizeAbsolutePath)) {
-            throw new IOException("File '" + normalizeAbsolutePath + "' does not found");
-        }
-
-        return normalizeAbsolutePath;
-    }
-
-    private static Optional<String> getFileExtension(String filename) {
-        return Optional.ofNullable(filename)
-                .filter(f -> f.contains("."))
-                .map(f -> f.substring(filename.lastIndexOf(".") + 1));
     }
 }
