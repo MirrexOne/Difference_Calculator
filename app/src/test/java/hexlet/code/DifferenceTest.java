@@ -16,7 +16,7 @@ class DifferenceTest {
     private String pathToSecondYamlFile;
 
     @BeforeEach
-    public void beforeAll() throws IOException {
+    public void beforeEach() throws IOException {
         pathToFirstJsonFile = PATH_TO_FIXTURES + "file5JsonNested.json";
         pathToSecondJsonFile = PATH_TO_FIXTURES + "file6JsonNested.json";
         pathToFirstYamlFile = PATH_TO_FIXTURES + "file7YamlNested.yaml";
@@ -27,8 +27,7 @@ class DifferenceTest {
     @Test
     void testDefaultGenerateDifferenceJson() throws IOException {
         String expected = "\n"
-                +
-                "{\n"
+                +"{\n"
                 +
                 "      chars1: [a, b, c]\n"
                 +
@@ -86,8 +85,7 @@ class DifferenceTest {
     @Test
     void testDefaultGenerateDifferenceYaml() throws IOException {
         String expected = "\n"
-                +
-                "{\n"
+                + "{\n"
                 +
                 "      calling-birds: [huey, dewey, louie, fred]\n"
                 +
