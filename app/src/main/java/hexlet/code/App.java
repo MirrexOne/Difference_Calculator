@@ -24,7 +24,9 @@ class App implements Callable<String> {
 
     @Override
     public String call() throws IOException {
-        return Differ.generate(filepath1, filepath2, format);
+        String difference = Differ.generate(filepath1, filepath2, format);
+        System.out.println(difference);
+        return difference;
     }
 
     public static void main(String[] args) {
