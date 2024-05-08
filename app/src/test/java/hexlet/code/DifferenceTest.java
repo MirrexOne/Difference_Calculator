@@ -169,4 +169,40 @@ class DifferenceTest {
         assertEquals(expected, actual);
     }
 
+    @Test
+    void testJsonFormatGenerateDifferenceJson() throws IOException {
+        String expected =
+                        "[{\"chars1\":\"unchanged\",\"value\":[\"a\",\"b\",\"c\"]},"
+                        +
+                        "{\"chars2\":\"modified\",\"value1\":[\"d\",\"e\",\"f\"],\"value2\":false},"
+                        +
+                        "{\"checked\":\"modified\",\"value1\":false,\"value2\":true},"
+                        +
+                        "{\"default\":\"modified\",\"value1\":null,\"value2\":[\"value1\",\"value2\"]},"
+                        +
+                        "{\"id\":\"modified\",\"value1\":45,\"value2\":null},"
+                        +
+                        "{\"key1\":\"deleted\",\"value\":\"value1\"},"
+                        +
+                        "{\"key2\":\"added\",\"value\":\"value2\"},"
+                        +
+                        "{\"numbers1\":\"unchanged\",\"value\":[1,2,3,4]},"
+                        +
+                        "{\"numbers2\":\"modified\",\"value1\":[2,3,4,5],\"value2\":[22,33,44,55]},"
+                        +
+                        "{\"numbers3\":\"deleted\",\"value\":[3,4,5]},"
+                        +
+                        "{\"numbers4\":\"added\",\"value\":[4,5,6]},"
+                        +
+                        "{\"obj1\":\"added\",\"value\":{\"nestedKey\":\"value\",\"isNested\":true}},"
+                        +
+                        "{\"setting1\":\"modified\",\"value1\":\"Some value\",\"value2\":\"Another value\"},"
+                        +
+                        "{\"setting2\":\"modified\",\"value1\":200,\"value2\":300},"
+                        +
+                        "{\"setting3\":\"modified\",\"value1\":true,\"value2\":\"none\"}]";
+
+        String actual = Differ.generate(pathToFirstJsonFile, pathToSecondJsonFile, "json");
+        assertEquals(expected, actual);
+    }
 }
