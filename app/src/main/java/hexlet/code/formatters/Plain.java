@@ -43,17 +43,17 @@ public class Plain extends Format {
 
     private String changeRenderingValue(Object value) {
         boolean isComplex = isComplexValue(value);
-        String valueRendering;
+        String renderedValue;
 
         if (isComplex) {
-            valueRendering = "[complex value]";
+            renderedValue = "[complex value]";
         } else if (value instanceof String) {
-            valueRendering = "'" + value + "'";
+            renderedValue = "'" + value + "'";
         } else {
-            valueRendering = String.valueOf(value);
+            renderedValue = String.valueOf(value);
         }
 
-        return valueRendering;
+        return renderedValue;
     }
 
     private boolean isComplexValue(Object value) {
