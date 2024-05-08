@@ -4,7 +4,7 @@
 [![Test Coverage](https://api.codeclimate.com/v1/badges/090e3bc93a359ad68ecc/test_coverage)](https://codeclimate.com/github/MirrexOne/java-project-71/test_coverage)
 # Introduce to project:
 ### *What does the project represent ?*
-Project is *CLI* application and micro-library, that provides useful feature for parsing Json and Yaml files.   
+Project is *CLI* application and micro-library, that provides useful feature for finding the differences between Json's and Yaml's files.   
 Also, there is several formats to output difference in data between two files.
 
 ### *What output formats are presented in project ?*  
