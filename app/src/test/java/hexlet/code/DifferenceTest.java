@@ -207,18 +207,30 @@ class DifferenceTest {
     @Test
     void testJsonFormatGenerateDifferenceYaml() throws IOException {
         String expected =
-                        "[{\"calling-birds\":\"unchanged\",\"value\":[\"huey\",\"dewey\",\"louie\",\"fred\"]}," +
-                        "{\"doe\":\"modified\",\"value1\":\"a deer, a female deer\",\"value2\":\"cat\"}," +
-                        "{\"french-hens\":\"unchanged\",\"value\":3}," +
-                        "{\"partridges\":\"deleted\",\"value\":{\"count\":1,\"location\":\"a pear tree\"" +
-                        ",\"turtle-doves\":\"two\"}}," +
-                        "{\"pi\":\"unchanged\",\"value\":3.14159}," +
-                        "{\"ray\":\"modified\",\"value1\":\"a drop of golden sun\"," +
-                        "\"value2\":\"Crucial moment of the world\"}," +
-                        "{\"xmas\":\"modified\",\"value1\":true,\"value2\":false}," +
-                        "{\"xmas-fifth-day\":\"modified\",\"value1\":{\"calling-birds\":\"four\",\"french-hens\":3," +
-                        "\"golden-rings\":5},\"value2\":{\"calling-birds\":\"four\",\"french-hens\":3," +
-                        "\"golden-rings\":1,\"partridges\":{\"count\":1,\"location\":\"a pear tree\"}," +
+                        "[{\"calling-birds\":\"unchanged\",\"value\":[\"huey\",\"dewey\",\"louie\",\"fred\"]},"
+                                +
+                        "{\"doe\":\"modified\",\"value1\":\"a deer, a female deer\",\"value2\":\"cat\"},"
+                                +
+                        "{\"french-hens\":\"unchanged\",\"value\":3},"
+                                +
+                        "{\"partridges\":\"deleted\",\"value\":{\"count\":1,\"location\":\"a pear tree\""
+                                +
+                        ",\"turtle-doves\":\"two\"}},"
+                                +
+                        "{\"pi\":\"unchanged\",\"value\":3.14159},"
+                                +
+                        "{\"ray\":\"modified\",\"value1\":\"a drop of golden sun\","
+                                +
+                        "\"value2\":\"Crucial moment of the world\"},"
+                                +
+                        "{\"xmas\":\"modified\",\"value1\":true,\"value2\":false},"
+                                +
+                        "{\"xmas-fifth-day\":\"modified\",\"value1\":{\"calling-birds\":\"four\",\"french-hens\":3,"
+                                +
+                        "\"golden-rings\":5},\"value2\":{\"calling-birds\":\"four\",\"french-hens\":3,"
+                                +
+                        "\"golden-rings\":1,\"partridges\":{\"count\":1,\"location\":\"a pear tree\"},"
+                                +
                         "\"turtle-doves\":\"two\"}}]";
 
         String actual = Differ.generate(pathToFirstYamlFile, pathToSecondYamlFile, "json");
