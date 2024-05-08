@@ -24,9 +24,7 @@ class App implements Callable<String> {
 
     @Override
     public String call() throws IOException {
-        String generate = Differ.generate(filepath1, filepath2, format);
-        System.out.println(generate);
-        return generate;
+        return Differ.generate(filepath1, filepath2, format);
     }
 
     public static void main(String[] args) {
@@ -34,9 +32,7 @@ class App implements Callable<String> {
             System.exit(new CommandLine(new App()).execute(args));
             throw new IOException("File not found");
         } catch (IOException exception) {
-            String message = exception.getMessage();
-            System.out.println(message);
+            exception.getMessage();
         }
     }
-
 }
