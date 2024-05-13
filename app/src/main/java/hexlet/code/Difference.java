@@ -16,25 +16,28 @@ final class Difference {
         List<Map<String, Object>> differenceStore = new ArrayList<>();
         String keyOfValue = "value";
 
-        fileData1.forEach((key, value1) -> {
-            if ((fileData1.containsKey(key) && fileData2.containsKey(key))
-                    && (Objects.deepEquals(value1, fileData2.get(key)))) {
+        Map<String, Object> firstFileSortedData = Difference.sortMap(fileData1);
+        Map<String, Object> secondFileSortedData = Difference.sortMap(fileData2);
+
+        firstFileSortedData.forEach((key, value1) -> {
+            if ((firstFileSortedData.containsKey(key) && secondFileSortedData.containsKey(key))
+                    && (Objects.deepEquals(value1, secondFileSortedData.get(key)))) {
 
                 Map<String, Object> unchangedKey = new LinkedHashMap<>();
                 unchangedKey.put(key, "unchanged");
                 unchangedKey.put(keyOfValue, value1);
                 differenceStore.add(unchangedKey);
 
-            } else if ((fileData1.containsKey(key) && fileData2.containsKey(key))
-                    && (!Objects.deepEquals(value1, fileData2.get(key)))) {
+            } else if ((firstFileSortedData.containsKey(key) && secondFileSortedData.containsKey(key))
+                    && (!Objects.deepEquals(value1, secondFileSortedData.get(key)))) {
 
                 Map<String, Object> modifiedKey = new LinkedHashMap<>();
                 modifiedKey.put(key, "modified");
                 modifiedKey.put("value1", value1);
-                modifiedKey.put("value2", fileData2.get(key));
+                modifiedKey.put("value2", secondFileSortedData.get(key));
                 differenceStore.add(modifiedKey);
 
-            } else if (!(fileData1.containsKey(key) && fileData2.containsKey(key))) {
+            } else if (!(firstFileSortedData.containsKey(key) && secondFileSortedData.containsKey(key))) {
 
                 Map<String, Object> deletedKey = new LinkedHashMap<>();
                 deletedKey.put(key, "deleted");
@@ -43,8 +46,8 @@ final class Difference {
             }
         });
 
-        fileData2.forEach((key, value) -> {
-            if (!fileData1.containsKey(key)) {
+        secondFileSortedData.forEach((key, value) -> {
+            if (!firstFileSortedData.containsKey(key)) {
 
                 Map<String, Object> addedKey = new LinkedHashMap<>();
                 addedKey.put(key, "added");
@@ -62,5 +65,13 @@ final class Difference {
         sortedList.sort(Comparator.comparing(map -> map.keySet().toString()));
 
         return sortedList;
+    }
+
+    private static Map<String, Object> sortMap(Map<String, Object> unsortedMap) {
+        Map<String, Object> sortedParsedMap = new LinkedHashMap<>();
+        unsortedMap.entrySet().stream()
+                .sorted(Map.Entry.comparingByKey())
+                .forEachOrdered(el -> sortedParsedMap.put(el.getKey(), el.getValue()));
+        return sortedParsedMap;
     }
 }

@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -37,10 +36,7 @@ public final class Differ {
         Map<String, Object> firstFileParsedData = firstFileParser.parse(firstFileRetrievedData);
         Map<String, Object> secondFileParsedData = secondFileParser.parse(secondFileRetrievedData);
 
-        Map<String, Object> firstFileSortedData = sortMap(firstFileParsedData);
-        Map<String, Object> secondFileSortedData = sortMap(secondFileParsedData);
-
-        List<Map<String, Object>> tree = Difference.generateDifference(firstFileSortedData, secondFileSortedData);
+        List<Map<String, Object>> tree = Difference.generateDifference(firstFileParsedData, secondFileParsedData);
 
         Format requiredRenderingFormat = Format.getFormat(outputFormat);
 
@@ -69,13 +65,5 @@ public final class Differ {
         return Optional.ofNullable(filename)
                 .filter(f -> f.contains("."))
                 .map(f -> f.substring(filename.lastIndexOf(".") + 1));
-    }
-
-    private static Map<String, Object> sortMap(Map<String, Object> unsortedMap) {
-        Map<String, Object> sortedParsedMap = new LinkedHashMap<>();
-        unsortedMap.entrySet().stream()
-                .sorted(Map.Entry.comparingByKey())
-                .forEachOrdered(el -> sortedParsedMap.put(el.getKey(), el.getValue()));
-        return sortedParsedMap;
     }
 }
