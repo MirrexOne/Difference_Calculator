@@ -21,7 +21,7 @@ final class Difference {
 
         firstFileSortedData.forEach((key, value1) -> {
             if ((firstFileSortedData.containsKey(key) && secondFileSortedData.containsKey(key))
-                    && (Objects.deepEquals(value1, secondFileSortedData.get(key)))) {
+                    && (isObjectsEqual(value1, secondFileSortedData.get(key)))) {
 
                 Map<String, Object> unchangedKey = new LinkedHashMap<>();
                 unchangedKey.put(key, "unchanged");
@@ -29,7 +29,7 @@ final class Difference {
                 differenceStore.add(unchangedKey);
 
             } else if ((firstFileSortedData.containsKey(key) && secondFileSortedData.containsKey(key))
-                    && (!Objects.deepEquals(value1, secondFileSortedData.get(key)))) {
+                    && (!isObjectsEqual(value1, secondFileSortedData.get(key)))) {
 
                 Map<String, Object> modifiedKey = new LinkedHashMap<>();
                 modifiedKey.put(key, "modified");
@@ -57,6 +57,14 @@ final class Difference {
         });
 
         return sortMapsByKey(differenceStore);
+    }
+
+    private static boolean isObjectsEqual(Object objectOne, Object objectTwo) {
+        if (objectOne == null || objectTwo == null) {
+            return objectOne == objectTwo;
+        }
+
+        return objectOne.equals(objectTwo);
     }
 
     private static List<Map<String, Object>> sortMapsByKey(List<Map<String, Object>> listMaps) {
