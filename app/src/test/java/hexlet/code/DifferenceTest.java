@@ -3,7 +3,11 @@ package hexlet.code;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -21,6 +25,24 @@ class DifferenceTest {
         pathToSecondJsonFile = PATH_TO_FIXTURES + "file6JsonNested.json";
         pathToFirstYamlFile = PATH_TO_FIXTURES + "file7YamlNested.yaml";
         pathToSecondYamlFile = PATH_TO_FIXTURES + "file8YamlNested.yaml";
+    }
+
+    private static String readFileData(String pathToFile) throws IOException {
+        Path path = Paths.get(pathToFile);
+        StringBuilder sb = new StringBuilder();
+        BufferedReader reader = Files.newBufferedReader(path);
+        try(reader) {
+            String currentLine;
+            while ((currentLine = reader.readLine()) != null) {
+                sb.append(currentLine);
+                sb.append("\n");
+            }
+        } catch (IOException exception) {
+            System.out.println(exception.getMessage());
+        }
+
+        reader.close();
+        return sb.toString();
     }
 
     @Test
