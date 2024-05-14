@@ -1,0 +1,14 @@
+{
+    calling-birds: [huey, dewey, louie, fred]
+  - doe: a deer, a female deer
+  + doe: cat
+    french-hens: 3
+  - partridges: {count=1, location=a pear tree, turtle-doves=two}
+    pi: 3.14159
+  - ray: a drop of golden sun
+  + ray: Crucial moment of the world
+  - xmas: true
+  + xmas: false
+  - xmas-fifth-day: {calling-birds=four, french-hens=3, golden-rings=5}
+  + xmas-fifth-day: {calling-birds=four, french-hens=3, golden-rings=1, partridges={count=1, location=a pear tree}, turtle-doves=two}
+}

@@ -1,0 +1,5 @@
+Property 'doe' was updated. From 'a deer, a female deer' to 'cat'
+Property 'partridges' was removed
+Property 'ray' was updated. From 'a drop of golden sun' to 'Crucial moment of the world'
+Property 'xmas' was updated. From true to false
+Property 'xmas-fifth-day' was updated. From [complex value] to [complex value]
