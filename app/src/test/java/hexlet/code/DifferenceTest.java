@@ -32,7 +32,7 @@ class DifferenceTest {
         Path path = Paths.get(pathToFile);
         StringBuilder sb = new StringBuilder();
         BufferedReader reader = Files.newBufferedReader(path);
-        try(reader) {
+        try (reader) {
             String currentLine;
             while ((currentLine = reader.readLine()) != null) {
                 sb.append(currentLine);
