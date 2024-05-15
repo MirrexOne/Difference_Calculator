@@ -28,8 +28,8 @@ class DifferenceTest {
     }
 
     private static String readFileData(String fileName) throws IOException {
-        final String PATH_TO_EXPECTED_RESULTS = "./src/test/resources/expected_results/";
-        Path path = Paths.get(PATH_TO_EXPECTED_RESULTS + fileName);
+        final String pathToExpectedResult = "./src/test/resources/expected_results/";
+        Path path = Paths.get(pathToExpectedResult + fileName);
 
         StringBuilder sb = new StringBuilder();
         BufferedReader reader = Files.newBufferedReader(path);
