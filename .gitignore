@@ -7,11 +7,17 @@ build/
 
 
 # Ignore IDEA files
-.idea
+.idea/
 .idea/modules.xml
 .idea/jarRepositories.xml
 .idea/compiler.xml
 .idea/libraries/
+.settings
+.bin
+.project*
+gitattributes.bib:Zone.Identifier
+.factorypath
+**/logs/
 *.iws
 *.iml
 *.ipr

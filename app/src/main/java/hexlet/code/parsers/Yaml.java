@@ -9,9 +9,7 @@ import java.io.IOException;
 import java.util.Map;
 
 public class Yaml extends Parser {
-
-    @Override
-    public Map<String, Object> parse(File retrievedFileData) throws IOException {
+    public final Map<String, Object> parse(File retrievedFileData) throws IOException {
         ObjectMapper mapperYaml = new YAMLMapper();
         TypeReference<Map<String, Object>> specifiedType = new TypeReference<>() { };
 

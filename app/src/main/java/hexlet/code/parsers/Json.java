@@ -9,9 +9,7 @@ import java.io.IOException;
 import java.util.Map;
 
 public class Json extends Parser {
-
-    @Override
-    public Map<String, Object> parse(File retrievedFileData) throws IOException {
+    public final Map<String, Object> parse(File retrievedFileData) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.registerModules(new JavaTimeModule());
         ObjectReader objectReader = objectMapper.reader();

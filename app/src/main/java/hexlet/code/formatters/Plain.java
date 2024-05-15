@@ -6,10 +6,9 @@ import java.util.Objects;
 import java.util.Set;
 
 public class Plain extends Format {
-    @Override
-    public String outputFormatting(List<Map<String, Object>> differenceTree) {
-        StringBuilder plain = new StringBuilder("\n");
-        final String DEFINITION_OF_KEY = "Property";
+    public final String outputFormatting(List<Map<String, Object>> differenceTree) {
+        StringBuilder plain = new StringBuilder();
+        String definitionOfKey = "Property";
 
         for (Map<String, Object> entry : differenceTree) {
             Set<Map.Entry<String, Object>> entries = entry.entrySet();
@@ -22,39 +21,39 @@ public class Plain extends Format {
                     Object valueBefore = changeRenderingValue(entry.get("value1"));
                     Object valueAfter = changeRenderingValue(entry.get("value2"));
 
-                    plain.append(DEFINITION_OF_KEY).append(" '").append(key).append("' ").append("was updated. ")
+                    plain.append(definitionOfKey).append(" '").append(key).append("' ").append("was updated. ")
                             .append("From ").append(valueBefore).append(" to ").append(valueAfter).append("\n");
 
                 } else if ("added".equals(value)) {
                     Object addedValue = changeRenderingValue(entry.get("value"));
 
-                    plain.append(DEFINITION_OF_KEY).append(" '").append(key).append("' ")
+                    plain.append(definitionOfKey).append(" '").append(key).append("' ")
                             .append("was added with value: ").append(addedValue).append("\n");
 
                 } else if ("deleted".equals(value)) {
 
-                    plain.append(DEFINITION_OF_KEY).append(" '").append(key).append("' ")
+                    plain.append(definitionOfKey).append(" '").append(key).append("' ")
                             .append("was removed").append("\n");
                 }
             }
         }
 
-        return plain.toString();
+        return plain.substring(0, plain.length() - 1);
     }
 
     private String changeRenderingValue(Object value) {
         boolean isComplex = isComplexValue(value);
-        String valueRendering;
+        String renderedValue;
 
         if (isComplex) {
-            valueRendering = "[complex value]";
+            renderedValue = "[complex value]";
         } else if (value instanceof String) {
-            valueRendering = "'" + value + "'";
+            renderedValue = "'" + value + "'";
         } else {
-            valueRendering = String.valueOf(value);
+            renderedValue = String.valueOf(value);
         }
 
-        return valueRendering;
+        return renderedValue;
     }
 
     private boolean isComplexValue(Object value) {

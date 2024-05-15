@@ -1,172 +1,104 @@
 package hexlet.code;
 
-import hexlet.code.parsers.Parser;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class DifferenceTest {
 
     private static final String PATH_TO_FIXTURES = "./src/test/resources/fixtures/";
+    private static final String PATH_TO_EXPECTED_RESULTS = "./src/test/resources/expected_results/";
     private String pathToFirstJsonFile;
     private String pathToSecondJsonFile;
     private String pathToFirstYamlFile;
     private String pathToSecondYamlFile;
 
     @BeforeEach
-    public void beforeAll() throws IOException {
+    public void beforeEach() throws IOException {
         pathToFirstJsonFile = PATH_TO_FIXTURES + "file5JsonNested.json";
         pathToSecondJsonFile = PATH_TO_FIXTURES + "file6JsonNested.json";
         pathToFirstYamlFile = PATH_TO_FIXTURES + "file7YamlNested.yaml";
         pathToSecondYamlFile = PATH_TO_FIXTURES + "file8YamlNested.yaml";
+    }
 
+    private static String readFileData(String pathToFile) throws IOException {
+        Path path = Paths.get(pathToFile);
+        StringBuilder sb = new StringBuilder();
+        BufferedReader reader = Files.newBufferedReader(path);
+        try (reader) {
+            String currentLine;
+            while ((currentLine = reader.readLine()) != null) {
+                sb.append(currentLine);
+                sb.append("\n");
+            }
+        } catch (IOException exception) {
+            System.out.println(exception.getMessage());
+        }
+
+        reader.close();
+        return sb.substring(0, sb.length() - 1);
     }
 
     @Test
-    void testDefaultGenerateDifferenceJson() throws IOException {
-        String expected = "\n"
-                +
-                "{\n"
-                +
-                "      chars1: [a, b, c]\n"
-                +
-                "    - chars2: [d, e, f]\n"
-                +
-                "    + chars2: false\n"
-                +
-                "    - checked: false\n"
-                +
-                "    + checked: true\n"
-                +
-                "    - default: null\n"
-                +
-                "    + default: [value1, value2]\n"
-                +
-                "    - id: 45\n"
-                +
-                "    + id: null\n"
-                +
-                "    - key1: value1\n"
-                +
-                "    + key2: value2\n"
-                +
-                "      numbers1: [1, 2, 3, 4]\n"
-                +
-                "    - numbers2: [2, 3, 4, 5]\n"
-                +
-                "    + numbers2: [22, 33, 44, 55]\n"
-                +
-                "    - numbers3: [3, 4, 5]\n"
-                +
-                "    + numbers4: [4, 5, 6]\n"
-                +
-                "    + obj1: {nestedKey=value, isNested=true}\n"
-                +
-                "    - setting1: Some value\n"
-                +
-                "    + setting1: Another value\n"
-                +
-                "    - setting2: 200\n"
-                +
-                "    + setting2: 300\n"
-                +
-                "    - setting3: true\n"
-                +
-                "    + setting3: none\n"
-                +
-                "}\n";
-
+    void testStylishGenerateDifferenceJson() throws IOException {
+        String expected = readFileData(PATH_TO_EXPECTED_RESULTS + "result_stylish_json.txt");
         String actual = Differ.generate(pathToFirstJsonFile, pathToSecondJsonFile, "stylish");
         assertEquals(expected, actual);
-
     }
 
     @Test
-    void testDefaultGenerateDifferenceYaml() throws IOException {
-        String expected = "\n"
-                +
-                "{\n"
-                +
-                "      calling-birds: [huey, dewey, louie, fred]\n"
-                +
-                "    - doe: a deer, a female deer\n"
-                +
-                "    + doe: cat\n"
-                +
-                "      french-hens: 3\n"
-                +
-                "    - partridges: {count=1, location=a pear tree, turtle-doves=two}\n"
-                +
-                "      pi: 3.14159\n"
-                +
-                "    - ray: a drop of golden sun\n"
-                +
-                "    + ray: Crucial moment of the world\n"
-                +
-                "    - xmas: true\n"
-                +
-                "    + xmas: false\n"
-                +
-                "    - xmas-fifth-day: {calling-birds=four, french-hens=3, golden-rings=5}\n"
-                +
-                "    + xmas-fifth-day: {calling-birds=four, french-hens=3, golden-rings=1, "
-                +
-                "partridges={count=1, location=a pear tree}, turtle-doves=two}\n"
-                +
-                "}\n";
-
-        String actual = Differ.generate(pathToFirstYamlFile, pathToSecondYamlFile, "stylish");
-        assertEquals(expected, actual);
-    }
-
-    @Test
-    void testPlainGenerateDifferenceJson() throws IOException {
-        String expected = "\n"
-                +
-                "Property 'chars2' was updated. From [complex value] to false\n"
-                +
-                "Property 'checked' was updated. From false to true\n"
-                +
-                "Property 'default' was updated. From null to [complex value]\n"
-                +
-                "Property 'id' was updated. From 45 to null\n"
-                +
-                "Property 'key1' was removed\n"
-                +
-                "Property 'key2' was added with value: 'value2'\n"
-                +
-                "Property 'numbers2' was updated. From [complex value] to [complex value]\n"
-                +
-                "Property 'numbers3' was removed\n"
-                +
-                "Property 'numbers4' was added with value: [complex value]\n"
-                +
-                "Property 'obj1' was added with value: [complex value]\n"
-                +
-                "Property 'setting1' was updated. From 'Some value' to 'Another value'\n"
-                +
-                "Property 'setting2' was updated. From 200 to 300\n"
-                +
-                "Property 'setting3' was updated. From true to 'none'\n";
-
+    void testPlaintGenerateDifferenceJson() throws IOException {
+        String expected = readFileData(PATH_TO_EXPECTED_RESULTS + "result_plain_json.txt");
         String actual = Differ.generate(pathToFirstJsonFile, pathToSecondJsonFile, "plain");
         assertEquals(expected, actual);
     }
 
     @Test
-    void testPlainGenerateDifferenceYaml() throws IOException {
-        String expected = "\n" +
-                "Property 'doe' was updated. From 'a deer, a female deer' to 'cat'\n" +
-                "Property 'partridges' was removed\n" +
-                "Property 'ray' was updated. From 'a drop of golden sun' to 'Crucial moment of the world'\n" +
-                "Property 'xmas' was updated. From true to false\n" +
-                "Property 'xmas-fifth-day' was updated. From [complex value] to [complex value]\n";
+    void testJsonFormatGenerateDifferenceJson() throws IOException {
+        String expected = readFileData(PATH_TO_EXPECTED_RESULTS + "result_jsonFormat_json.txt");
+        String actual = Differ.generate(pathToFirstJsonFile, pathToSecondJsonFile, "json");
+        assertEquals(expected, actual);
+    }
 
+    @Test
+    void testStylishGenerateDifferenceYaml() throws IOException {
+        String expected = readFileData(PATH_TO_EXPECTED_RESULTS + "result_stylish_yaml.txt");
+        String actual = Differ.generate(pathToFirstYamlFile, pathToSecondYamlFile, "stylish");
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void testPlainGenerateDifferenceYaml() throws IOException {
+        String expected = readFileData(PATH_TO_EXPECTED_RESULTS + "result_plain_yaml.txt");
         String actual = Differ.generate(pathToFirstYamlFile, pathToSecondYamlFile, "plain");
         assertEquals(expected, actual);
     }
 
+    @Test
+    void testJsonFormatGenerateDifferenceYaml() throws IOException {
+        String expected = readFileData(PATH_TO_EXPECTED_RESULTS + "result_jsonFormat_yaml.txt");
+        String actual = Differ.generate(pathToFirstYamlFile, pathToSecondYamlFile, "json");
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void testDefaultGenerateDifferenceJson() throws IOException {
+        String expected = readFileData(PATH_TO_EXPECTED_RESULTS + "result_stylish_json.txt");
+        String actual = Differ.generate(pathToFirstJsonFile, pathToSecondJsonFile);
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void testDefaultGenerateDifferenceYaml() throws IOException {
+        String expected = readFileData(PATH_TO_EXPECTED_RESULTS + "result_stylish_yaml.txt");
+        String actual = Differ.generate(pathToFirstYamlFile, pathToSecondYamlFile);
+        assertEquals(expected, actual);
+    }
 }
