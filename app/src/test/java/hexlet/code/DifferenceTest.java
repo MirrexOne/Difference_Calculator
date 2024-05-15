@@ -14,7 +14,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class DifferenceTest {
 
     private static final String PATH_TO_FIXTURES = "./src/test/resources/fixtures/";
-    private static final String PATH_TO_EXPECTED_RESULTS = "./src/test/resources/expected_results/";
     private String pathToFirstJsonFile;
     private String pathToSecondJsonFile;
     private String pathToFirstYamlFile;
@@ -28,8 +27,10 @@ class DifferenceTest {
         pathToSecondYamlFile = PATH_TO_FIXTURES + "file8YamlNested.yaml";
     }
 
-    private static String readFileData(String pathToFile) throws IOException {
-        Path path = Paths.get(pathToFile);
+    private static String readFileData(String fileName) throws IOException {
+        final String PATH_TO_EXPECTED_RESULTS = "./src/test/resources/expected_results/";
+        Path path = Paths.get(PATH_TO_EXPECTED_RESULTS + fileName);
+
         StringBuilder sb = new StringBuilder();
         BufferedReader reader = Files.newBufferedReader(path);
         try (reader) {
@@ -48,56 +49,56 @@ class DifferenceTest {
 
     @Test
     void testStylishGenerateDifferenceJson() throws IOException {
-        String expected = readFileData(PATH_TO_EXPECTED_RESULTS + "result_stylish_json.txt");
+        String expected = readFileData("result_stylish_json.txt");
         String actual = Differ.generate(pathToFirstJsonFile, pathToSecondJsonFile, "stylish");
         assertEquals(expected, actual);
     }
 
     @Test
     void testPlaintGenerateDifferenceJson() throws IOException {
-        String expected = readFileData(PATH_TO_EXPECTED_RESULTS + "result_plain_json.txt");
+        String expected = readFileData("result_plain_json.txt");
         String actual = Differ.generate(pathToFirstJsonFile, pathToSecondJsonFile, "plain");
         assertEquals(expected, actual);
     }
 
     @Test
     void testJsonFormatGenerateDifferenceJson() throws IOException {
-        String expected = readFileData(PATH_TO_EXPECTED_RESULTS + "result_jsonFormat_json.txt");
+        String expected = readFileData("result_jsonFormat_json.txt");
         String actual = Differ.generate(pathToFirstJsonFile, pathToSecondJsonFile, "json");
         assertEquals(expected, actual);
     }
 
     @Test
     void testStylishGenerateDifferenceYaml() throws IOException {
-        String expected = readFileData(PATH_TO_EXPECTED_RESULTS + "result_stylish_yaml.txt");
+        String expected = readFileData("result_stylish_yaml.txt");
         String actual = Differ.generate(pathToFirstYamlFile, pathToSecondYamlFile, "stylish");
         assertEquals(expected, actual);
     }
 
     @Test
     void testPlainGenerateDifferenceYaml() throws IOException {
-        String expected = readFileData(PATH_TO_EXPECTED_RESULTS + "result_plain_yaml.txt");
+        String expected = readFileData("result_plain_yaml.txt");
         String actual = Differ.generate(pathToFirstYamlFile, pathToSecondYamlFile, "plain");
         assertEquals(expected, actual);
     }
 
     @Test
     void testJsonFormatGenerateDifferenceYaml() throws IOException {
-        String expected = readFileData(PATH_TO_EXPECTED_RESULTS + "result_jsonFormat_yaml.txt");
+        String expected = readFileData("result_jsonFormat_yaml.txt");
         String actual = Differ.generate(pathToFirstYamlFile, pathToSecondYamlFile, "json");
         assertEquals(expected, actual);
     }
 
     @Test
     void testDefaultGenerateDifferenceJson() throws IOException {
-        String expected = readFileData(PATH_TO_EXPECTED_RESULTS + "result_stylish_json.txt");
+        String expected = readFileData("result_stylish_json.txt");
         String actual = Differ.generate(pathToFirstJsonFile, pathToSecondJsonFile);
         assertEquals(expected, actual);
     }
 
     @Test
     void testDefaultGenerateDifferenceYaml() throws IOException {
-        String expected = readFileData(PATH_TO_EXPECTED_RESULTS + "result_stylish_yaml.txt");
+        String expected = readFileData("result_stylish_yaml.txt");
         String actual = Differ.generate(pathToFirstYamlFile, pathToSecondYamlFile);
         assertEquals(expected, actual);
     }
