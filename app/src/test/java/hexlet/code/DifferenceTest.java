@@ -63,7 +63,7 @@ class DifferenceTest {
 
     @ParameterizedTest
     @CsvSource({
-		"stylish, result_stylish_yaml.txt",
+        "stylish, result_stylish_yaml.txt",
         "plain, result_plain_yaml.txt",
         "json, result_jsonFormat_yaml.txt",
         "'', result_stylish_yaml.txt"
