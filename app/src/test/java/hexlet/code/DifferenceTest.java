@@ -55,7 +55,7 @@ class DifferenceTest {
         "json, result_jsonFormat_json.txt",
         "'', result_stylish_json.txt"
     })
-    void testStylishGenerateDifferenceJson(String renderingFormat, String fileName) throws IOException {
+    void testGenerateDifferenceJson(String renderingFormat, String fileName) throws IOException {
         String expected = readFileData("json_files/" + fileName);
         String actual = Differ.generate(pathToFirstJsonFile, pathToSecondJsonFile, renderingFormat);
         assertEquals(expected, actual);
@@ -68,7 +68,7 @@ class DifferenceTest {
         "json, result_jsonFormat_yaml.txt",
         "'', result_stylish_yaml.txt"
     })
-    void testStylishGenerateDifferenceYaml(String renderingFormat, String fileName) throws IOException {
+    void testGenerateDifferenceYaml(String renderingFormat, String fileName) throws IOException {
         String expected = readFileData("yaml_files/" + fileName);
         String actual = Differ.generate(pathToFirstYamlFile, pathToSecondYamlFile, renderingFormat);
         assertEquals(expected, actual);
