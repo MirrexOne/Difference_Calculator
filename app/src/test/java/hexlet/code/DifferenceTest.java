@@ -50,10 +50,10 @@ class DifferenceTest {
 
     @ParameterizedTest
     @CsvSource({
-            "stylish, result_stylish_json.txt",
-            "plain, result_plain_json.txt",
-            "json, result_jsonFormat_json.txt",
-            "'', result_stylish_json.txt"
+        "stylish, result_stylish_json.txt",
+        "plain, result_plain_json.txt",
+        "json, result_jsonFormat_json.txt",
+        "'', result_stylish_json.txt"
     })
     void testStylishGenerateDifferenceJson(String renderingFormat, String fileName) throws IOException {
         String expected = readFileData("json_files/" + fileName);
@@ -63,10 +63,10 @@ class DifferenceTest {
 
     @ParameterizedTest
     @CsvSource({
-            "stylish, result_stylish_yaml.txt",
-            "plain, result_plain_yaml.txt",
-            "json, result_jsonFormat_yaml.txt",
-            "'', result_stylish_yaml.txt"
+		"stylish, result_stylish_yaml.txt",
+        "plain, result_plain_yaml.txt",
+        "json, result_jsonFormat_yaml.txt",
+        "'', result_stylish_yaml.txt"
     })
     void testStylishGenerateDifferenceYaml(String renderingFormat, String fileName) throws IOException {
         String expected = readFileData("yaml_files/" + fileName);
